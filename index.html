@@ -349,6 +349,71 @@ header:before{content:"";position:absolute;inset:0;background:radial-gradient(ci
  .mahalaya-title{font-size:20px}
  .mahalaya-play{min-height:48px}
 }
+
+/* ===== Final mobile polish: true dark mode + right-side one-hand navigation ===== */
+:root[data-theme="dark"]{
+  --app-bg:#0f0c09;--app-surface:#191511;--app-ink:#f7ead3;--app-muted:#b9aa92;--app-accent:#fb923c;--app-gold:#f5c35b;--app-line:#3a3024;--app-shadow:0 8px 28px rgba(0,0,0,.34);
+  --bg:#20170d;--pg:#0f0c09;--card:#191511;--ink:#f7ead3;--mut:#b9aa92;--line:#3a3024;--river:#075985;--blue:#60a5fa;--green:#4ade80;--rd:#342719;--rdo:#241b11;
+}
+@media(max-width:899px){
+  :root[data-theme="dark"] body{background:linear-gradient(#100d0a 0,#0f0c09 50%,#0b0907 100%);color:var(--app-ink)}
+  :root[data-theme="dark"] header{background:linear-gradient(145deg,#260710 0%,#4a0c1b 50%,#8c3517 100%)}
+  :root[data-theme="dark"] .tab,
+  :root[data-theme="dark"] .chip,
+  :root[data-theme="dark"] .plan,
+  :root[data-theme="dark"] #sq,
+  :root[data-theme="dark"] .mobile-tool,
+  :root[data-theme="dark"] .card,
+  :root[data-theme="dark"] .mapbox,
+  :root[data-theme="dark"] details,
+  :root[data-theme="dark"] .mobile-sheet,
+  :root[data-theme="dark"] .sheet-btn,
+  :root[data-theme="dark"] .theme-btn,
+  :root[data-theme="dark"] .sos-btn,
+  :root[data-theme="dark"] .netpill,
+  :root[data-theme="dark"] .cm select,
+  :root[data-theme="dark"] .zb button{
+    background:#191511;color:var(--app-ink);border-color:var(--app-line)
+  }
+  :root[data-theme="dark"] .tab.on,
+  :root[data-theme="dark"] .chip.on{background:#f7ead3;color:#17130f;border-color:#f7ead3}
+  :root[data-theme="dark"] .mobile-tool{background:#191511;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+  :root[data-theme="dark"] .mobile-nav{background:rgba(20,16,12,.96);border-color:#3a3024;box-shadow:0 -8px 25px rgba(0,0,0,.35)}
+  :root[data-theme="dark"] .mobile-nav button{color:#b9aa92}
+  :root[data-theme="dark"] .mobile-nav button.active{background:#f7ead3;color:#17130f}
+  :root[data-theme="dark"] .leg{background:rgba(25,21,17,.94);color:var(--app-ink);border-color:var(--app-line)}
+  :root[data-theme="dark"] .fd{background:#2c210f;color:#f8e8bf}
+  :root[data-theme="dark"] .fd a{color:#fbbf24}
+  :root[data-theme="dark"] .mahalaya-card{box-shadow:0 10px 28px rgba(0,0,0,.35)}
+  :root[data-theme="dark"] .dpop{background:#191511;color:var(--app-ink);border-color:#9a6b12}
+  :root[data-theme="dark"] .dview{background:#0f0c09;color:var(--app-ink)}
+  :root[data-theme="dark"] #bar{background:#f7ead3;color:#17130f}
+  :root[data-theme="dark"] #bar a,#bar button{color:#17130f}
+
+  /* Right-side vertical dock: leaves the Netlify bottom bar clear and keeps controls under one thumb. */
+  body{padding-bottom:24px;padding-right:78px}
+  .mobile-nav{
+    left:auto;right:10px;bottom:calc(12px + env(safe-area-inset-bottom,0px));
+    width:60px;height:auto;display:grid;grid-template-columns:1fr;grid-template-rows:repeat(5,52px);
+    padding:5px;gap:4px;border:1px solid var(--app-line);border-radius:22px;
+    background:rgba(255,252,247,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    box-shadow:0 10px 30px rgba(30,15,5,.20);z-index:70;
+  }
+  .mobile-nav button{min-height:52px;width:50px;border-radius:15px;font-size:9px;gap:2px}
+  .mobile-nav button span:first-child{font-size:20px}
+  .mobile-nav button.active{box-shadow:0 3px 10px rgba(0,0,0,.12)}
+  .mobile-sheet{left:10px;right:78px;bottom:calc(12px + env(safe-area-inset-bottom,0px));max-height:72vh}
+  .dpop,.sos{right:78px;left:10px;bottom:calc(12px + env(safe-area-inset-bottom,0px));max-width:none}
+  #bar{margin-right:0}
+}
+@media(max-width:390px){
+  body{padding-right:74px}
+  .mobile-nav{right:7px;width:56px;grid-template-rows:repeat(5,49px);padding:4px;gap:3px}
+  .mobile-nav button{width:46px;min-height:49px}
+  .mobile-nav button span:first-child{font-size:18px}
+  .mobile-sheet,.dpop,.sos{right:70px}
+}
+
 </style></head><body>
 <div id="splash" onclick="skipSplash()">
 <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
