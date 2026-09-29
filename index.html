@@ -40,7 +40,7 @@ details{background:var(--card);border-radius:10px;padding:10px 12px;margin:12px 
 #sq{width:100%;padding:10px 12px;border:2px solid var(--ink);border-radius:10px;background:var(--card);color:var(--ink);font-size:15px;margin-bottom:8px}#prog{font-weight:800;font-size:13px;margin:0 0 8px}
 #pop{max-height:58%;overflow:auto}.by{margin-top:10px;font-size:13px;font-weight:700}.by a{color:#fff}
 .ft{text-align:center;font-size:13px;margin:0 0 80px;color:var(--mut)}.ft a{color:var(--blue);font-weight:800}details ul{margin:8px 0 0;padding-left:18px}details li{margin:4px 0}
-.tabs{display:flex;gap:8px;overflow-x:auto;margin:4px 0 10px;padding-bottom:2px}.tab{flex:none;border:2px solid var(--ink);background:var(--card);color:var(--ink);border-radius:12px;padding:9px 14px;font-weight:800;font-size:14px;cursor:pointer}.tab.on{background:var(--ink);color:var(--pg)}.hd{display:flex;gap:12px;justify-content:space-between;align-items:flex-start}.hl{flex:1 1 150px;min-width:0}#cd{flex:0 0 auto;background:#1c1206d9;color:#fff;border-radius:14px;padding:8px 12px;text-align:center;text-shadow:none;min-width:125px}.cm{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;font-weight:700;font-size:13px}.cm select{padding:8px;border:2px solid var(--ink);border-radius:8px;background:var(--card);color:var(--ink);font-size:14px;max-width:100%}
+.tabs{display:flex;gap:8px;overflow-x:auto;margin:4px 0 10px;padding-bottom:2px}.tab{flex:none;border:2px solid var(--ink);background:var(--card);color:var(--ink);border-radius:12px;padding:9px 14px;font-weight:800;font-size:14px;cursor:pointer}.tab.on{background:var(--ink);color:var(--pg)}.hd{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}.hl{width:100%;max-width:640px;min-width:0}#cd{flex:0 0 auto;background:#1c1206d9;color:#fff;border-radius:14px;padding:8px 12px;text-align:center;text-shadow:none;min-width:125px;margin:0 auto}.cm{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;font-weight:700;font-size:13px}.cm select{padding:8px;border:2px solid var(--ink);border-radius:8px;background:var(--card);color:var(--ink);font-size:14px;max-width:100%}
 #splash{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:radial-gradient(circle at 50% 30%,#7C1D2E,#2a0a10 75%);color:#FFE9B8;text-align:center;transition:opacity .5s ease;padding:20px}
 #splash.hide{opacity:0;pointer-events:none}
 #splash svg{width:120px;height:120px;filter:drop-shadow(0 4px 18px #00000080)}
@@ -62,7 +62,7 @@ details{background:var(--card);border-radius:10px;padding:10px 12px;margin:12px 
 #qrsetup{font-size:13px;text-align:left;background:var(--card);border-radius:10px;padding:12px}
 #qrsetup code{background:var(--rdo,#e9d9a6);padding:2px 5px;border-radius:4px}
 .theme-btn,.sos-btn{border:2px solid var(--ink);background:var(--card);color:var(--ink);border-radius:10px;width:38px;height:38px;font-size:17px;cursor:pointer;flex:none}
-.hctrl{display:flex;gap:6px;margin-top:6px}
+.hctrl{display:flex;gap:6px;margin-top:6px;justify-content:center}
 .sos{position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 84px);z-index:90;background:#DC2626;color:#fff;border-radius:14px;padding:12px;display:none;box-shadow:0 6px 20px #0007;max-width:420px;margin:0 auto}
 .sos.show{display:block}
 .sos b{display:block;margin-bottom:6px}
@@ -303,26 +303,26 @@ details{background:var(--card);border-radius:10px;padding:10px 12px;margin:12px 
 }
 
 /* ===== Modern app shell + Mahalaya ===== */
-:root{--app-bg:#fbf8f2;--app-surface:#fff;--app-ink:#17130f;--app-muted:#756a5c;--app-accent:#c2410c;--app-gold:#e6a21a;--app-line:#eadfd0;--app-shadow:0 8px 28px rgba(50,30,10,.09)}
+:root{--app-bg:var(--pg);--app-surface:var(--card);--app-ink:var(--ink);--app-muted:var(--mut);--app-accent:#c2410c;--app-gold:#e6a21a;--app-line:var(--line);--app-shadow:0 8px 28px rgba(50,30,10,.09)}
 body{background:var(--app-bg)}
 header{background:linear-gradient(145deg,#4a0715 0%,#7c1025 48%,#d35a1d 100%);border-bottom:0;box-shadow:0 10px 30px rgba(65,12,20,.18)}
 header:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 10%,rgba(255,219,120,.28),transparent 34%),radial-gradient(circle at 10% 80%,rgba(255,255,255,.08),transparent 30%);pointer-events:none}
 .wrap{max-width:1180px}
 @media(max-width:899px){
- body{background:linear-gradient(#fffaf3 0,#fbf8f2 44%,#f7f2e9 100%)}
+ body{background:linear-gradient(var(--pg) 0,var(--bg) 46%,var(--pg) 100%)}
  header{padding:13px 13px 18px;border-radius:0 0 24px 24px;box-shadow:0 8px 26px rgba(70,18,20,.16)}
  header .hd{position:relative;z-index:1}
  .wrap{padding:8px 10px 20px}
  .tabs,.chips,#plans{padding-left:2px;padding-right:2px}
- .tab,.chip,.plan{border:1px solid var(--app-line);background:#fff;box-shadow:0 2px 8px rgba(60,40,20,.06)}
+ .tab,.chip,.plan{border:1px solid var(--app-line);background:var(--app-surface);box-shadow:0 2px 8px rgba(60,40,20,.06)}
  .tab.on,.chip.on{background:var(--ink);border-color:var(--ink)}
- #sq{border:1px solid var(--app-line);background:#fff;box-shadow:0 5px 18px rgba(60,40,20,.08);height:52px}
+ #sq{border:1px solid var(--app-line);background:var(--app-surface);box-shadow:0 5px 18px rgba(60,40,20,.08);height:52px}
  .mobile-tools{grid-template-columns:repeat(4,1fr);gap:8px}
- .mobile-tool{border:1px solid var(--app-line);background:rgba(255,255,255,.94);box-shadow:0 4px 12px rgba(60,40,20,.07);min-height:52px}
- .mapbox{border:1px solid var(--app-line);box-shadow:0 8px 24px rgba(60,40,20,.10);background:#f7f0df}
- .card{border:1px solid var(--app-line);border-left:5px solid var(--c);background:#fff;box-shadow:0 5px 16px rgba(60,40,20,.07)}
- .mobile-nav{background:rgba(255,252,247,.94);border-top:1px solid #eadfd0;box-shadow:0 -8px 25px rgba(40,20,10,.10)}
- .mobile-nav button.active{background:#17130f;color:#fff8e8}
+ .mobile-tool{border:1px solid var(--app-line);background:color-mix(in srgb,var(--app-surface) 94%,transparent);box-shadow:0 4px 12px rgba(60,40,20,.07);min-height:52px}
+ .mapbox{border:1px solid var(--app-line);box-shadow:0 8px 24px rgba(60,40,20,.10);background:var(--bg)}
+ .card{border:1px solid var(--app-line);border-left:5px solid var(--c);background:var(--app-surface);box-shadow:0 5px 16px rgba(60,40,20,.07)}
+ .mobile-nav{background:color-mix(in srgb,var(--app-surface) 94%,transparent);border-top:1px solid var(--app-line);box-shadow:0 -8px 25px rgba(40,20,10,.10)}
+ .mobile-nav button.active{background:var(--ink);color:var(--pg)}
  .mobile-sheet{border:1px solid var(--app-line);box-shadow:0 18px 45px rgba(40,20,10,.18)}
 }
 .mahalaya-card{position:relative;overflow:hidden;margin:10px 0 12px;border-radius:20px;padding:15px;color:#fff8ea;background:linear-gradient(135deg,#351018,#75152a 55%,#c24a1b);box-shadow:0 10px 26px rgba(72,12,22,.18)}
