@@ -62,3 +62,143 @@ alter table public.chat_messages enable row level security;
 alter table public.checkins      enable row level security;
 alter table public.tips          enable row level security;
 alter table public.photos        enable row level security;
+
+
+-- =====================================================================
+-- DIRECT MODE (works WITHOUT Netlify Functions)
+-- The website calls these functions through Supabase's public API. Tables stay locked (RLS on,
+-- no policies); only these validated functions can read/write, and only admins can see visitor data.
+-- =====================================================================
+
+-- Photo bucket (public read, small images only)
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('puja-photos', 'puja-photos', true, 3145728, array['image/jpeg','image/png','image/webp'])
+on conflict (id) do update set public = true, file_size_limit = 3145728,
+  allowed_mime_types = array['image/jpeg','image/png','image/webp'];
+
+drop policy if exists "puja photos public upload" on storage.objects;
+create policy "puja photos public upload" on storage.objects
+  for insert to anon, authenticated
+  with check (bucket_id = 'puja-photos' and name like 'community/%');
+
+-- Admin allow-list
+create table if not exists public.admins (email text primary key);
+alter table public.admins enable row level security;
+
+-- Visitor heartbeat (also records device type, IP if the gateway exposes it, optional location)
+create or replace function public.puja_heartbeat(
+  p_code text, p_page text default null, p_audio boolean default false,
+  p_lat double precision default null, p_lon double precision default null,
+  p_loc boolean default false, p_ua text default null)
+returns void language plpgsql security definer set search_path = public as $$
+declare h json; ipv text; v_ip inet; ua text; dev text; okloc boolean;
+begin
+  if p_code is null or p_code !~ '^[A-Za-z0-9]{6,32}$' then raise exception 'Invalid visitor code'; end if;
+  begin h := current_setting('request.headers', true)::json; exception when others then h := '{}'::json; end;
+  if h is null then h := '{}'::json; end if;
+  ipv := nullif(trim(coalesce(h->>'cf-connecting-ip', h->>'x-real-ip', split_part(coalesce(h->>'x-forwarded-for',''), ',', 1), '')), '');
+  begin v_ip := ipv::inet; exception when others then v_ip := null; end;
+  ua := left(coalesce(h->>'user-agent', p_ua, ''), 1000);
+  dev := case when ua ~* 'ipad|tablet' then 'Tablet' when ua ~* 'mobi|android|iphone|ipod' then 'Mobile' else 'Desktop' end;
+  okloc := coalesce(p_loc,false) and p_lat between -90 and 90 and p_lon between -180 and 180;
+  insert into public.visitors as v (visitor_code, last_seen, current_page, device_type, user_agent, ip_address,
+                                    audio_playing, location_permission, latitude, longitude)
+  values (p_code, now(), left(p_page,300), dev, ua, v_ip, coalesce(p_audio,false), okloc,
+          case when okloc then p_lat end, case when okloc then p_lon end)
+  on conflict (visitor_code) do update set
+    last_seen = now(), current_page = excluded.current_page, device_type = excluded.device_type,
+    user_agent = excluded.user_agent, ip_address = excluded.ip_address, audio_playing = excluded.audio_playing,
+    location_permission = excluded.location_permission, latitude = excluded.latitude, longitude = excluded.longitude;
+end $$;
+
+create or replace function public.puja_pulse(p_pandal integer)
+returns integer language sql security definer stable set search_path = public as $$
+  select count(distinct client_id)::int from public.checkins
+  where pandal_id = p_pandal and created_at >= now() - interval '2 hours';
+$$;
+
+create or replace function public.puja_checkin(p_pandal integer, p_client text)
+returns void language plpgsql security definer set search_path = public as $$
+begin
+  if p_pandal is null or p_pandal < 0 or p_pandal > 2000 then raise exception 'Invalid pandal'; end if;
+  if p_client is null or char_length(p_client) not between 1 and 100 then raise exception 'Invalid client'; end if;
+  insert into public.checkins (pandal_id, client_id) values (p_pandal, p_client);
+end $$;
+
+create or replace function public.puja_checkout(p_pandal integer, p_client text)
+returns void language plpgsql security definer set search_path = public as $$
+begin
+  delete from public.checkins where pandal_id = p_pandal and client_id = p_client;
+end $$;
+
+create or replace function public.puja_feed(p_pandal integer)
+returns json language sql security definer stable set search_path = public as $$
+  select json_build_object(
+    'tips', coalesce((select json_agg(t) from (select id, text, created_at from public.tips
+              where pandal_id = p_pandal and approved order by created_at desc limit 20) t), '[]'::json),
+    'photos', coalesce((select json_agg(p) from (select id, url, created_at from public.photos
+              where pandal_id = p_pandal and approved order by created_at desc limit 12) p), '[]'::json));
+$$;
+
+create or replace function public.puja_add_tip(p_pandal integer, p_text text, p_client text)
+returns json language plpgsql security definer set search_path = public as $$
+declare t text := btrim(coalesce(p_text,'')); rid uuid;
+begin
+  if p_pandal is null or p_pandal < 0 or p_pandal > 2000 then raise exception 'Invalid pandal'; end if;
+  if char_length(t) not between 1 and 220 then raise exception 'Tip must be 1-220 characters'; end if;
+  if (select count(*) from public.tips where client_id = p_client and created_at > now() - interval '1 hour') >= 10
+    then raise exception 'Too many tips - please try again later'; end if;
+  insert into public.tips (pandal_id, text, client_id, approved) values (p_pandal, t, left(p_client,100), true) returning id into rid;
+  return json_build_object('id', rid);
+end $$;
+
+create or replace function public.puja_add_photo(p_pandal integer, p_url text, p_client text)
+returns json language plpgsql security definer set search_path = public as $$
+declare rid uuid;
+begin
+  if p_pandal is null or p_pandal < 0 or p_pandal > 2000 then raise exception 'Invalid pandal'; end if;
+  if p_url is null or p_url not like 'https://obrtopvixqemwhvzadda.supabase.co/storage/v1/object/public/puja-photos/community/%'
+    then raise exception 'Invalid photo URL'; end if;
+  if (select count(*) from public.photos where client_id = p_client and created_at > now() - interval '1 hour') >= 10
+    then raise exception 'Too many photos - please try again later'; end if;
+  insert into public.photos (pandal_id, url, client_id, approved) values (p_pandal, left(p_url,500), left(p_client,100), true) returning id into rid;
+  return json_build_object('id', rid);
+end $$;
+
+-- Admin dashboard data (only for emails listed in public.admins)
+create or replace function public.admin_summary()
+returns json language plpgsql security definer set search_path = public as $$
+begin
+  if not exists (select 1 from public.admins where email = lower(coalesce(auth.jwt()->>'email',''))) then
+    raise exception 'Not an admin';
+  end if;
+  return json_build_object(
+    'live', coalesce((select json_agg(v) from (
+        select visitor_code, first_seen, last_seen, current_page, device_type, user_agent,
+               host(ip_address) as ip_address, audio_playing, location_permission, latitude, longitude
+        from public.visitors where last_seen >= now() - interval '90 seconds'
+        order by last_seen desc limit 500) v), '[]'::json),
+    'totalCount', (select count(*) from public.visitors),
+    'serverTime', now());
+end $$;
+
+-- Who may call what
+revoke all on function public.puja_heartbeat(text,text,boolean,double precision,double precision,boolean,text) from public;
+revoke all on function public.puja_pulse(integer) from public;
+revoke all on function public.puja_checkin(integer,text) from public;
+revoke all on function public.puja_checkout(integer,text) from public;
+revoke all on function public.puja_feed(integer) from public;
+revoke all on function public.puja_add_tip(integer,text,text) from public;
+revoke all on function public.puja_add_photo(integer,text,text) from public;
+revoke all on function public.admin_summary() from public, anon;
+grant execute on function public.puja_heartbeat(text,text,boolean,double precision,double precision,boolean,text) to anon, authenticated;
+grant execute on function public.puja_pulse(integer) to anon, authenticated;
+grant execute on function public.puja_checkin(integer,text) to anon, authenticated;
+grant execute on function public.puja_checkout(integer,text) to anon, authenticated;
+grant execute on function public.puja_feed(integer) to anon, authenticated;
+grant execute on function public.puja_add_tip(integer,text,text) to anon, authenticated;
+grant execute on function public.puja_add_photo(integer,text,text) to anon, authenticated;
+grant execute on function public.admin_summary() to authenticated;
+
+-- >>> LAST STEP: run this line separately with YOUR admin email (same one as your Supabase admin user):
+-- insert into public.admins (email) values (lower('YOUR_ADMIN_EMAIL_HERE')) on conflict do nothing;

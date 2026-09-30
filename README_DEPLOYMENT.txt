@@ -1,41 +1,40 @@
-PUJAMAP26 DEPLOYMENT PACKAGE  (Netlify + Supabase)
+PUJAMAP26 - SIMPLE SETUP (no Netlify Functions needed)
 
-FOLDER LAYOUT (keep exactly like this on GitHub):
-  index.html
-  admin.html                     (Supabase URL + public anon key already filled in)
-  netlify.toml
-  supabase-schema.sql
-  netlify/functions/admin.js
-  netlify/functions/community.js
-  netlify/functions/concierge.js
+The website now talks to Supabase directly through safe database functions.
+Netlify only has to host index.html and admin.html.
 
-SETUP
-1. Supabase > SQL Editor: paste and run ALL of supabase-schema.sql.
-2. Supabase > Storage: create a PUBLIC bucket named  puja-photos
-3. Supabase > Authentication > Users > Add user (your admin email + password).
-4. Upload this folder's contents to a GitHub repo (keep the netlify/functions folders).
-5. Netlify > Add new site > Import from GitHub (do not use drag-and-drop; it will not build functions).
-6. Netlify > Site configuration > Environment variables (scope: include Functions):
-     SUPABASE_URL                = https://obrtopvixqemwhvzadda.supabase.co
-     SUPABASE_SERVICE_ROLE_KEY   = your secret / service_role key
-     ADMIN_EMAIL                 = the same email as the Supabase admin user
-     ANTHROPIC_API_KEY           = (optional, for AI Concierge)
-7. Deploys > Trigger deploy > Clear cache and deploy site.
+FILES (upload to the ROOT of your GitHub repo):
+  index.html, admin.html, netlify.toml, package.json, supabase-schema.sql
+  netlify/functions/*.js   (optional - not required any more)
 
-CHECK IT WORKS
-Open  https://YOUR-SITE.netlify.app/.netlify/functions/community
-You should see: "function":"running", all four tables "ok", "photoBucket":"ok".
-  - 404 page            -> functions were not deployed (check folder layout / Deploys > Functions).
-  - a value is false    -> that environment variable is missing; add it and redeploy.
-  - table ERROR         -> run supabase-schema.sql again.
-  - photoBucket MISSING -> create the public puja-photos bucket.
-The main site also shows the real error text under "Demo/local mode" if the backend fails.
-Then open /admin.html, sign in, and keep the main site open in another tab/phone:
-visitors appear within ~30 seconds.
+STEP 1  Supabase > SQL Editor > New query
+        Paste the ENTIRE supabase-schema.sql and click Run.
+        (It also creates the puja-photos photo bucket for you.)
+
+STEP 2  Supabase > Authentication > Users > Add user
+        Enter your admin email + a password (tick "auto confirm" if offered).
+
+STEP 3  Supabase > SQL Editor > New query. Run this ONE line with your real admin email:
+        insert into public.admins (email) values (lower('YOUR_ADMIN_EMAIL_HERE')) on conflict do nothing;
+
+STEP 4  GitHub: upload the files, commit. Netlify redeploys by itself.
+        (Netlify > Deploys should show "Published".)
+
+STEP 5  Test:
+        - Open your site. Tap "I'm here": the message should say "Live community pulse".
+        - Open /admin.html, sign in with the Step 2 email/password.
+          Keep the main site open on a phone: a visitor row appears within ~30 seconds.
+
+TROUBLESHOOTING
+- The site itself shows the reason in brackets, e.g. (HTTP 404: Could not find the function ...)
+  means Step 1 was not run / not fully run. Run the whole SQL again (safe to repeat).
+- Admin says "Not an admin": do Step 3 with the exact same email you log in with.
+- Admin says "Invalid login credentials": do Step 2.
+- Photo upload error: run Step 1 again (creates the bucket and upload rule).
 
 SECURITY
-- NEVER put SUPABASE_SERVICE_ROLE_KEY in GitHub, index.html or admin.html.
-- Row Level Security is enabled on all tables (no public policies); only the Netlify functions read/write.
-- Once everything works you may delete the GET health-check block near the top of community.js.
-- The Mahalaya stream URL in index.html is still blank and must be set to an authorized stream.
+- Only the public anon key is in the website. No secret key is needed anywhere in this setup.
+- All tables are locked (RLS). The public can only call validated functions; only your admin email can read visitor data.
+- Tips/photos are rate-limited to 10 per hour per browser.
 - Visitor code is a browser identifier, not a hardware/MAC address.
+- The Mahalaya stream URL in index.html is still blank and must be set to an authorized stream.

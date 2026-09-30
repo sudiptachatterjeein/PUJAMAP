@@ -697,7 +697,38 @@ function refreshTrust(i){
 }
 function apiHeaders(){return {'Content-Type':'application/json'}}
 let lastCommunityError='';
-async function communityFetch(body){try{const r=await fetch(COMMUNITY_API,{method:'POST',headers:apiHeaders(),body:JSON.stringify(body)});if(!r.ok){let m='';try{m=(await r.json()).error||''}catch(e){}throw new Error('HTTP '+r.status+(m?': '+m:''))}communityOnline=true;lastCommunityError='';return await r.json()}catch(e){communityOnline=false;lastCommunityError=String(e&&e.message||e);return null}}
+// --- Direct Supabase mode (used automatically when the Netlify function is unavailable). Public anon key only. ---
+const SUPABASE_URL="https://obrtopvixqemwhvzadda.supabase.co";
+const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9icnRvcHZpeHFlbXdodnphZGRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA3NDIxNTEsImV4cCI6MjEwNjMxODE1MX0.YC39Z36MBaQ2twujKKIcU3otvmYLbF_h1mV7pxTTKAA";
+let useDirect=false;
+function sbHeaders(extra){const h={apikey:SUPABASE_ANON_KEY};if(String(SUPABASE_ANON_KEY).startsWith('eyJ'))h.Authorization='Bearer '+SUPABASE_ANON_KEY;return Object.assign(h,extra||{})}
+async function sbRpc(name,args){const r=await fetch(SUPABASE_URL+'/rest/v1/rpc/'+name,{method:'POST',headers:sbHeaders({'Content-Type':'application/json'}),body:JSON.stringify(args||{})});const t=await r.text();let d=null;try{d=t?JSON.parse(t):null}catch(e){}if(!r.ok)throw new Error('HTTP '+r.status+(d&&(d.message||d.error)?': '+(d.message||d.error):''));return d}
+function resizeToBlob(dataUrl,maxDim,quality){return new Promise((res,rej)=>{const img=new Image();img.onload=()=>{const k=Math.min(1,maxDim/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.width*k));c.height=Math.max(1,Math.round(img.height*k));c.getContext('2d').drawImage(img,0,0,c.width,c.height);c.toBlob(b=>b?res(b):rej(new Error('Could not process image')),'image/jpeg',quality)};img.onerror=()=>rej(new Error('Could not read image'));img.src=dataUrl})}
+async function directFetch(b){
+  const pid=Number(b.pandalId),cid=String(b.clientId||'').slice(0,100);
+  switch(b.action){
+    case 'visitor':await sbRpc('puja_heartbeat',{p_code:b.visitorCode,p_page:b.page||null,p_audio:!!b.audioPlaying,p_lat:b.latitude==null?null:b.latitude,p_lon:b.longitude==null?null:b.longitude,p_loc:!!b.locationPermission,p_ua:navigator.userAgent});return {ok:true};
+    case 'pulse':return {count:Number(await sbRpc('puja_pulse',{p_pandal:pid}))||0};
+    case 'checkin':await sbRpc('puja_checkin',{p_pandal:pid,p_client:cid});return {ok:true};
+    case 'checkout':await sbRpc('puja_checkout',{p_pandal:pid,p_client:cid});return {ok:true};
+    case 'feed':return await sbRpc('puja_feed',{p_pandal:pid});
+    case 'tip':return {ok:true,tip:await sbRpc('puja_add_tip',{p_pandal:pid,p_text:b.text,p_client:cid})};
+    case 'photo':{
+      const blob=await resizeToBlob(b.dataUrl,1600,0.82);
+      const path='community/'+pid+'/'+Date.now()+'-'+Math.random().toString(36).slice(2)+'.jpg';
+      const up=await fetch(SUPABASE_URL+'/storage/v1/object/puja-photos/'+path,{method:'POST',headers:sbHeaders({'Content-Type':'image/jpeg','x-upsert':'false'}),body:blob});
+      if(!up.ok){let m='';try{m=(await up.json()).message||''}catch(e){}throw new Error('Upload failed HTTP '+up.status+(m?': '+m:''))}
+      return {ok:true,photo:await sbRpc('puja_add_photo',{p_pandal:pid,p_url:SUPABASE_URL+'/storage/v1/object/public/puja-photos/'+path,p_client:cid})};
+    }
+  }
+  throw new Error('Unknown action');
+}
+async function communityFetch(body){
+  if(!useDirect){
+    try{const r=await fetch(COMMUNITY_API,{method:'POST',headers:apiHeaders(),body:JSON.stringify(body)});if(r.ok){communityOnline=true;lastCommunityError='';return await r.json()}useDirect=true}catch(e){useDirect=true}
+  }
+  try{const d=await directFetch(body);communityOnline=true;lastCommunityError='';return d}catch(e){communityOnline=false;lastCommunityError=String(e&&e.message||e);return null}
+}
 async function renderTipsAndPhotos(){
   const data=await communityFetch({action:'feed',pandalId:currentCommunityPandal});
   const tf=$("#tipFeed"),pg=$("#photoGrid");
@@ -720,10 +751,10 @@ async function doCheckin(active){
 function getClientId(){let x=localStorage.getItem('puja26_client_id');if(!x){x=crypto.randomUUID?.()||('c'+Date.now()+Math.random().toString(36).slice(2));localStorage.setItem('puja26_client_id',x)}return x}
 function openTipModal(){$("#tipPandalName").textContent='For: '+nm(currentCommunityPandal);$("#tipText").value='';$("#tipModal").classList.add('show')}
 function closeCommunityModal(id){$("#"+id).classList.remove('show')}
-async function submitTip(){const text=$("#tipText").value.trim();if(!text)return alert('Please write a short tip.');const data=await communityFetch({action:'tip',pandalId:currentCommunityPandal,text,clientId:getClientId()});if(!data){alert('The community backend is not connected yet. Add the Netlify/Supabase setup, then this will post for everyone.');return}closeCommunityModal('tipModal');renderTipsAndPhotos()}
+async function submitTip(){const text=$("#tipText").value.trim();if(!text)return alert('Please write a short tip.');const data=await communityFetch({action:'tip',pandalId:currentCommunityPandal,text,clientId:getClientId()});if(!data){alert('Could not post your tip'+(lastCommunityError?' ('+lastCommunityError.slice(0,160)+')':'')+'. Please try again.');return}closeCommunityModal('tipModal');renderTipsAndPhotos()}
 function openPhotoModal(){$("#photoFile").value='';$("#photoPreview").style.display='none';$("#photoModal").classList.add('show')}
 $("#photoFile")?.addEventListener('change',e=>{const f=e.target.files?.[0];if(!f)return;const u=URL.createObjectURL(f);$("#photoPreview").src=u;$("#photoPreview").style.display='block'})
-async function submitPhoto(){const f=$("#photoFile").files?.[0];if(!f)return alert('Choose a photo first.');if(f.size>8*1024*1024)return alert('Please choose a photo under 8 MB.');const reader=new FileReader();reader.onload=async()=>{const data=await communityFetch({action:'photo',pandalId:currentCommunityPandal,clientId:getClientId(),dataUrl:reader.result,name:f.name,type:f.type});if(!data){alert('The photo backend is not connected yet. Configure Netlify/Supabase Storage first.');return}closeCommunityModal('photoModal');renderTipsAndPhotos()};reader.readAsDataURL(f)}
+async function submitPhoto(){const f=$("#photoFile").files?.[0];if(!f)return alert('Choose a photo first.');if(f.size>8*1024*1024)return alert('Please choose a photo under 8 MB.');const reader=new FileReader();reader.onload=async()=>{const data=await communityFetch({action:'photo',pandalId:currentCommunityPandal,clientId:getClientId(),dataUrl:reader.result,name:f.name,type:f.type});if(!data){alert('Could not upload the photo'+(lastCommunityError?' ('+lastCommunityError.slice(0,160)+')':'')+'. Please try again.');return}closeCommunityModal('photoModal');renderTipsAndPhotos()};reader.readAsDataURL(f)}
 async function askConcierge(){const input=$("#aiPrompt"),out=$("#aiResult"),q=input.value.trim();if(!q)return;out.classList.add('show');out.textContent='Thinking…';try{const r=await fetch(AI_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:q,region:RG[rg]?.[0]||'Kolkata',selected:P.filter((p,i)=>ok(i)).slice(0,25).map((p,i)=>({name:p[0],metro:p[2],region:Z[p[1]][0]}))})});if(!r.ok)throw 0;const d=await r.json();out.textContent=d.answer||'No plan returned.'}catch(e){out.textContent='AI concierge is not connected yet. You can still use Search, Quick plans and Google Maps. To enable it on Netlify, add ANTHROPIC_API_KEY and deploy the included concierge function.'}}
 $("#aiAsk")?.addEventListener('click',askConcierge);$("#aiPrompt")?.addEventListener('keydown',e=>{if(e.key==='Enter')askConcierge()});
 function toggleLargeText(){document.body.classList.toggle('large-text');localStorage.setItem('puja26_large',document.body.classList.contains('large-text')?'1':'0')}
@@ -763,7 +794,7 @@ getVisitorCode();
 async function visitorHeartbeat(){
   const b={action:"visitor",visitorCode:getVisitorCode(),page:location.pathname+location.hash,audioPlaying:!!(mahalayaAudio&&!mahalayaAudio.paused)};
   try{const lat=localStorage.getItem("puja26_lat"),lon=localStorage.getItem("puja26_lon");if(lat&&lon){b.latitude=Number(lat);b.longitude=Number(lon);b.locationPermission=true}}catch(e){}
-  try{await fetch(COMMUNITY_API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b)})}catch(e){}
+  try{await communityFetch(b)}catch(e){}
 }
 setTimeout(visitorHeartbeat,1500);setInterval(visitorHeartbeat,30000);
 
