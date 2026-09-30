@@ -70,17 +70,6 @@ alter table public.photos        enable row level security;
 -- no policies); only these validated functions can read/write, and only admins can see visitor data.
 -- =====================================================================
 
--- Photo bucket (public read, small images only)
-insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-values ('puja-photos', 'puja-photos', true, 3145728, array['image/jpeg','image/png','image/webp'])
-on conflict (id) do update set public = true, file_size_limit = 3145728,
-  allowed_mime_types = array['image/jpeg','image/png','image/webp'];
-
-drop policy if exists "puja photos public upload" on storage.objects;
-create policy "puja photos public upload" on storage.objects
-  for insert to anon, authenticated
-  with check (bucket_id = 'puja-photos' and name like 'community/%');
-
 -- Admin allow-list
 create table if not exists public.admins (email text primary key);
 alter table public.admins enable row level security;
