@@ -49,7 +49,7 @@ details{background:var(--card);border-radius:10px;padding:10px 12px;margin:12px 
 #splash .by2{margin:14px 0 0;font-size:12px;opacity:.85}
 #splash .sptap{position:absolute;bottom:22px;font-size:11px;opacity:.7}
 .dpop{position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 84px);z-index:90;background:var(--card);color:var(--ink);border:3px solid #CA8A04;border-radius:16px;padding:12px 14px;display:none;gap:10px;align-items:center;box-shadow:0 6px 20px #0007;max-width:420px;margin:0 auto}
-.dpop.show{display:flex}
+.dpop.show{display:flex;animation:dpopGlow 1.8s ease-in-out infinite}
 .dpop .dpic{font-size:26px}.dpop .dptxt{flex:1;font-size:13px;line-height:1.3}
 .dpop .dpbtns{display:flex;flex-direction:column;gap:6px}
 .dpop .dpx{position:absolute;top:-10px;right:-10px;background:var(--ink);color:var(--pg);border:0;border-radius:50%;width:24px;height:24px;font-weight:800;cursor:pointer}
@@ -69,6 +69,32 @@ details{background:var(--card);border-radius:10px;padding:10px 12px;margin:12px 
 .sos a{display:inline-block;background:#fff;color:#DC2626;border-radius:8px;padding:6px 10px;margin:3px 4px 0 0;text-decoration:none;font-weight:800;font-size:13px}
 .sos .dpx{background:#fff;color:#DC2626}
 .netpill{border:2px solid var(--ink);background:var(--card);color:var(--ink);border-radius:10px;padding:0 10px;font-size:12px;font-weight:800;display:flex;align-items:center}
+
+
+/* ===== Live community + app features ===== */
+.community-shell{margin:12px 0 18px}
+.feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.feature-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px;box-shadow:0 2px 8px #0002}
+.feature-card h3{margin:0 0 5px;font-size:16px}.feature-card p{margin:4px 0;color:var(--mut);font-size:12px}
+.feature-card .feature-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.feature-btn{border:0;border-radius:10px;background:var(--ink);color:var(--pg);padding:9px 11px;font-weight:800;font-size:12px;cursor:pointer}
+.feature-btn.alt{background:var(--rdo);color:var(--ink)}
+.feature-btn.live{background:#dc2626;color:#fff}.feature-btn.good{background:#16a34a;color:#fff}
+.live-pulse{display:flex;align-items:center;gap:8px;font-weight:800}.pulse-dot{width:10px;height:10px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 5px #22c55e22;animation:pulse 1.5s infinite}@keyframes pulse{50%{box-shadow:0 0 0 9px #22c55e00}}
+.checkin-count{font-size:24px;font-weight:900;margin-top:4px}.tiny-muted{font-size:11px;color:var(--mut)}
+.tip-feed{max-height:180px;overflow:auto;margin-top:8px}.tip{padding:8px 0;border-top:1px solid var(--line);font-size:12px}.tip:first-child{border-top:0}.tip b{font-size:12px}.tip small{display:block;color:var(--mut);margin-top:2px}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:8px}.photo-grid img{width:100%;aspect-ratio:1;border-radius:9px;object-fit:cover;background:var(--rdo)}
+.access-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.access-pill{border:1px solid var(--line);border-radius:999px;padding:4px 7px;font-size:11px;font-weight:800;background:var(--pg)}
+.last-checked{font-size:11px;color:var(--mut);margin-top:5px}.social-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.social-links a{font-size:11px;font-weight:800;color:var(--blue)}
+.concierge{background:linear-gradient(135deg,#4c1020,#8a1230);color:#fff;border-radius:18px;padding:15px;margin:12px 0}.concierge h2{margin:0;font-size:20px}.concierge p{margin:4px 0 10px;color:#ffe9c7;font-size:12px}.concierge-row{display:flex;gap:7px}.concierge input{flex:1;min-width:0;border:0;border-radius:11px;padding:11px 12px;font-size:14px}.concierge button{border:0;border-radius:11px;padding:10px 12px;background:#facc15;color:#1c1206;font-weight:900}.concierge-result{margin-top:10px;background:#fff;color:#1c1206;border-radius:12px;padding:10px;display:none;font-size:13px;white-space:pre-wrap}.concierge-result.show{display:block}
+.accessibility-bar{display:none;gap:7px;flex-wrap:wrap;margin:8px 0}.accessibility-bar.show{display:flex}.accessibility-bar button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:8px 10px;font-weight:800}
+body.large-text{font-size:17px}body.large-text .nm{font-size:18px}body.large-text .zn,body.large-text .mt,body.large-text .card .acts .b{font-size:14px}body.high-contrast{--pg:#fff;--card:#fff;--bg:#fff;--ink:#000;--mut:#222;--line:#000;--blue:#0017a8}body.high-contrast header{filter:contrast(1.15)}
+.lm-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.lm-links a{background:var(--rdo);color:var(--ink);padding:6px 8px;border-radius:8px;text-decoration:none;font-weight:800;font-size:11px}
+.community-status{font-size:11px;color:var(--mut);margin-top:7px}.community-status.ok{color:#15803d}.community-status.warn{color:#b45309}
+.community-modal{position:fixed;inset:0;background:#0008;z-index:120;display:none;padding:14px;overflow:auto}.community-modal.show{display:flex;align-items:flex-end;justify-content:center}.community-panel{width:min(560px,100%);background:var(--card);color:var(--ink);border-radius:20px 20px 12px 12px;padding:16px;box-shadow:0 10px 40px #0008}.community-panel h2{margin:0 0 8px}.community-panel textarea,.community-panel input{width:100%;border:1px solid var(--line);background:var(--pg);color:var(--ink);border-radius:10px;padding:10px;font:inherit}.community-actions{display:flex;gap:8px;margin-top:9px}.community-actions button{flex:1;border:0;border-radius:10px;padding:10px;font-weight:900}.photo-preview{width:90px;height:90px;border-radius:10px;object-fit:cover;margin-top:8px;display:none}
+@media(max-width:899px){
+ .community-shell{margin:10px 0 16px}.feature-grid{grid-template-columns:1fr}.feature-card{border-radius:16px;padding:12px}.feature-card h3{font-size:15px}.concierge{border-radius:17px;padding:14px}.concierge-row{align-items:stretch}.concierge button{min-width:74px}.photo-grid{grid-template-columns:repeat(3,1fr)}
+}
 
 /* ===== Mobile-first enhancement layer ===== */
 .mobile-tools{display:none}
@@ -303,26 +329,26 @@ details{background:var(--card);border-radius:10px;padding:10px 12px;margin:12px 
 }
 
 /* ===== Modern app shell + Mahalaya ===== */
-:root{--app-bg:var(--pg);--app-surface:var(--card);--app-ink:var(--ink);--app-muted:var(--mut);--app-accent:#c2410c;--app-gold:#e6a21a;--app-line:var(--line);--app-shadow:0 8px 28px rgba(50,30,10,.09)}
+:root{--app-bg:#fbf8f2;--app-surface:#fff;--app-ink:#17130f;--app-muted:#756a5c;--app-accent:#c2410c;--app-gold:#e6a21a;--app-line:#eadfd0;--app-shadow:0 8px 28px rgba(50,30,10,.09)}
 body{background:var(--app-bg)}
 header{background:linear-gradient(145deg,#4a0715 0%,#7c1025 48%,#d35a1d 100%);border-bottom:0;box-shadow:0 10px 30px rgba(65,12,20,.18)}
 header:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 10%,rgba(255,219,120,.28),transparent 34%),radial-gradient(circle at 10% 80%,rgba(255,255,255,.08),transparent 30%);pointer-events:none}
 .wrap{max-width:1180px}
 @media(max-width:899px){
- body{background:linear-gradient(var(--pg) 0,var(--bg) 46%,var(--pg) 100%)}
+ body{background:linear-gradient(#fffaf3 0,#fbf8f2 44%,#f7f2e9 100%)}
  header{padding:13px 13px 18px;border-radius:0 0 24px 24px;box-shadow:0 8px 26px rgba(70,18,20,.16)}
  header .hd{position:relative;z-index:1}
  .wrap{padding:8px 10px 20px}
  .tabs,.chips,#plans{padding-left:2px;padding-right:2px}
- .tab,.chip,.plan{border:1px solid var(--app-line);background:var(--app-surface);box-shadow:0 2px 8px rgba(60,40,20,.06)}
+ .tab,.chip,.plan{border:1px solid var(--app-line);background:#fff;box-shadow:0 2px 8px rgba(60,40,20,.06)}
  .tab.on,.chip.on{background:var(--ink);border-color:var(--ink)}
- #sq{border:1px solid var(--app-line);background:var(--app-surface);box-shadow:0 5px 18px rgba(60,40,20,.08);height:52px}
+ #sq{border:1px solid var(--app-line);background:#fff;box-shadow:0 5px 18px rgba(60,40,20,.08);height:52px}
  .mobile-tools{grid-template-columns:repeat(4,1fr);gap:8px}
- .mobile-tool{border:1px solid var(--app-line);background:color-mix(in srgb,var(--app-surface) 94%,transparent);box-shadow:0 4px 12px rgba(60,40,20,.07);min-height:52px}
- .mapbox{border:1px solid var(--app-line);box-shadow:0 8px 24px rgba(60,40,20,.10);background:var(--bg)}
- .card{border:1px solid var(--app-line);border-left:5px solid var(--c);background:var(--app-surface);box-shadow:0 5px 16px rgba(60,40,20,.07)}
- .mobile-nav{background:color-mix(in srgb,var(--app-surface) 94%,transparent);border-top:1px solid var(--app-line);box-shadow:0 -8px 25px rgba(40,20,10,.10)}
- .mobile-nav button.active{background:var(--ink);color:var(--pg)}
+ .mobile-tool{border:1px solid var(--app-line);background:rgba(255,255,255,.94);box-shadow:0 4px 12px rgba(60,40,20,.07);min-height:52px}
+ .mapbox{border:1px solid var(--app-line);box-shadow:0 8px 24px rgba(60,40,20,.10);background:#f7f0df}
+ .card{border:1px solid var(--app-line);border-left:5px solid var(--c);background:#fff;box-shadow:0 5px 16px rgba(60,40,20,.07)}
+ .mobile-nav{background:rgba(255,252,247,.94);border-top:1px solid #eadfd0;box-shadow:0 -8px 25px rgba(40,20,10,.10)}
+ .mobile-nav button.active{background:#17130f;color:#fff8e8}
  .mobile-sheet{border:1px solid var(--app-line);box-shadow:0 18px 45px rgba(40,20,10,.18)}
 }
 .mahalaya-card{position:relative;overflow:hidden;margin:10px 0 12px;border-radius:20px;padding:15px;color:#fff8ea;background:linear-gradient(135deg,#351018,#75152a 55%,#c24a1b);box-shadow:0 10px 26px rgba(72,12,22,.18)}
@@ -349,19 +375,93 @@ header:before{content:"";position:absolute;inset:0;background:radial-gradient(ci
  .mahalaya-title{font-size:20px}
  .mahalaya-play{min-height:48px}
 }
+
+/* ===== Final mobile polish: true dark mode + right-side one-hand navigation ===== */
+:root[data-theme="dark"]{
+  --app-bg:#0f0c09;--app-surface:#191511;--app-ink:#f7ead3;--app-muted:#b9aa92;--app-accent:#fb923c;--app-gold:#f5c35b;--app-line:#3a3024;--app-shadow:0 8px 28px rgba(0,0,0,.34);
+  --bg:#20170d;--pg:#0f0c09;--card:#191511;--ink:#f7ead3;--mut:#b9aa92;--line:#3a3024;--river:#075985;--blue:#60a5fa;--green:#4ade80;--rd:#342719;--rdo:#241b11;
+}
+@media(max-width:899px){
+  :root[data-theme="dark"] body{background:linear-gradient(#100d0a 0,#0f0c09 50%,#0b0907 100%);color:var(--app-ink)}
+  :root[data-theme="dark"] header{background:linear-gradient(145deg,#260710 0%,#4a0c1b 50%,#8c3517 100%)}
+  :root[data-theme="dark"] .tab,
+  :root[data-theme="dark"] .chip,
+  :root[data-theme="dark"] .plan,
+  :root[data-theme="dark"] #sq,
+  :root[data-theme="dark"] .mobile-tool,
+  :root[data-theme="dark"] .card,
+  :root[data-theme="dark"] .mapbox,
+  :root[data-theme="dark"] details,
+  :root[data-theme="dark"] .mobile-sheet,
+  :root[data-theme="dark"] .sheet-btn,
+  :root[data-theme="dark"] .theme-btn,
+  :root[data-theme="dark"] .sos-btn,
+  :root[data-theme="dark"] .netpill,
+  :root[data-theme="dark"] .cm select,
+  :root[data-theme="dark"] .zb button{
+    background:#191511;color:var(--app-ink);border-color:var(--app-line)
+  }
+  :root[data-theme="dark"] .tab.on,
+  :root[data-theme="dark"] .chip.on{background:#f7ead3;color:#17130f;border-color:#f7ead3}
+  :root[data-theme="dark"] .mobile-tool{background:#191511;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+  :root[data-theme="dark"] .mobile-nav{background:rgba(20,16,12,.96);border-color:#3a3024;box-shadow:0 -8px 25px rgba(0,0,0,.35)}
+  :root[data-theme="dark"] .mobile-nav button{color:#b9aa92}
+  :root[data-theme="dark"] .mobile-nav button.active{background:#f7ead3;color:#17130f}
+  :root[data-theme="dark"] .leg{background:rgba(25,21,17,.94);color:var(--app-ink);border-color:var(--app-line)}
+  :root[data-theme="dark"] .fd{background:#2c210f;color:#f8e8bf}
+  :root[data-theme="dark"] .fd a{color:#fbbf24}
+  :root[data-theme="dark"] .mahalaya-card{box-shadow:0 10px 28px rgba(0,0,0,.35)}
+  :root[data-theme="dark"] .dpop{background:#191511;color:var(--app-ink);border-color:#9a6b12}
+  :root[data-theme="dark"] .dview{background:#0f0c09;color:var(--app-ink)}
+  :root[data-theme="dark"] #bar{background:#f7ead3;color:#17130f}
+  :root[data-theme="dark"] #bar a,#bar button{color:#17130f}
+
+  /* Right-side vertical dock: leaves the Netlify bottom bar clear and keeps controls under one thumb. */
+  body{padding-bottom:24px;padding-right:78px}
+  .mobile-nav{
+    left:auto;right:10px;bottom:calc(12px + env(safe-area-inset-bottom,0px));
+    width:60px;height:auto;display:grid;grid-template-columns:1fr;grid-template-rows:repeat(5,52px);
+    padding:5px;gap:4px;border:1px solid var(--app-line);border-radius:22px;
+    background:rgba(255,252,247,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    box-shadow:0 10px 30px rgba(30,15,5,.20);z-index:70;
+  }
+  .mobile-nav button{min-height:52px;width:50px;border-radius:15px;font-size:9px;gap:2px}
+  .mobile-nav button span:first-child{font-size:20px}
+  .mobile-nav button.active{box-shadow:0 3px 10px rgba(0,0,0,.12)}
+  .mobile-sheet{left:10px;right:78px;bottom:calc(12px + env(safe-area-inset-bottom,0px));max-height:72vh}
+  .dpop,.sos{right:78px;left:10px;bottom:calc(12px + env(safe-area-inset-bottom,0px));max-width:none}
+  #bar{margin-right:0}
+}
+@media(max-width:390px){
+  body{padding-right:74px}
+  .mobile-nav{right:7px;width:56px;grid-template-rows:repeat(5,49px);padding:4px;gap:3px}
+  .mobile-nav button{width:46px;min-height:49px}
+  .mobile-nav button span:first-child{font-size:18px}
+  .mobile-sheet,.dpop,.sos{right:70px}
+}
+
+@keyframes dpopGlow{0%,100%{box-shadow:0 6px 20px #0007,0 0 0 0 rgba(202,138,4,.55)}50%{box-shadow:0 6px 20px #0007,0 0 0 10px rgba(202,138,4,0)}}
+@keyframes payGlow{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.6)}50%{box-shadow:0 0 0 9px rgba(37,211,102,0)}}
+#upiapp{animation:payGlow 1.6s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.dpop.show,#upiapp{animation:none}}
 </style></head><body>
 <div id="splash" onclick="skipSplash()">
 <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-<defs><radialGradient id="fg" cx="50%" cy="42%" r="60%"><stop offset="0%" stop-color="#FFE3A3"/><stop offset="100%" stop-color="#F2A93B"/></radialGradient></defs>
-<path d="M100 8c-30 10-46 32-46 32l10 10c12-14 24-20 36-22 12 2 24 8 36 22l10-10S130 18 100 8Z" fill="#C81E3A"/>
-<circle cx="60" cy="26" r="7" fill="#FFD700"/><circle cx="140" cy="26" r="7" fill="#FFD700"/><circle cx="100" cy="14" r="8" fill="#FFD700"/>
-<circle cx="100" cy="100" r="58" fill="url(#fg)" stroke="#8A1230" stroke-width="3"/>
-<path d="M62 92c6-14 18-22 38-22s32 8 38 22" fill="none" stroke="#7A1020" stroke-width="4" stroke-linecap="round"/>
-<ellipse cx="76" cy="96" rx="8" ry="5" fill="#1c1206"/><ellipse cx="124" cy="96" rx="8" ry="5" fill="#1c1206"/>
-<path d="M60 90l-14-6M140 90l14-6" stroke="#7A1020" stroke-width="4" stroke-linecap="round"/>
-<circle cx="100" cy="112" r="4" fill="#C81E3A"/>
-<path d="M84 130q16 12 32 0" fill="none" stroke="#7A1020" stroke-width="3" stroke-linecap="round"/>
-<path d="M100 62v14M60 100h-14M140 100h14" stroke="#8A1230" stroke-width="3" stroke-linecap="round"/>
+<path d="M100 18c-13 15-20 30-15 44 4 11 10 15 15 15s11-4 15-15c5-14-2-29-15-44Z" fill="#E32227"/>
+<circle cx="100" cy="46" r="6" fill="#F3E3C3"/>
+<path d="M78 82c11 10 33 10 44 0" fill="none" stroke="#E32227" stroke-width="6" stroke-linecap="round"/>
+<g>
+<path d="M96 118c-16-20-42-26-60-16-5 3-5 7 0 10 18 12 44 16 60 6Z" fill="#F2C9DE" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+<circle cx="62" cy="116" r="11" fill="#111"/>
+<circle cx="58" cy="112" r="3" fill="#fff"/>
+</g>
+<g>
+<path d="M104 118c16-20 42-26 60-16 5 3 5 7 0 10-18 12-44 16-60 6Z" fill="#F2C9DE" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+<circle cx="138" cy="116" r="11" fill="#111"/>
+<circle cx="134" cy="112" r="3" fill="#fff"/>
+</g>
+<circle cx="112" cy="172" r="22" fill="none" stroke="#E8B32D" stroke-width="7"/>
+<path d="M66 158c9 3 12 12 7 20-5 7 1 14 9 12" fill="none" stroke="#C8202A" stroke-width="5" stroke-linecap="round"/>
 </svg>
 <h2>🪔 Durga Puja 2026</h2><p class="tag">Pandal Hopping Begins</p><p class="by2">Developed by Sudipta Chatterjee</p>
 <div class="sptap">Tap to skip</div>
@@ -369,7 +469,7 @@ header:before{content:"";position:absolute;inset:0;background:radial-gradient(ci
 <div class="dpop" id="dpop"><button class="dpx" onclick="closeDonatePop()">✕</button><div class="dpic">❤️</div><div class="dptxt"><b>Enjoying the map?</b><br>It's free — a small UPI tip keeps it updated every year.</div><div class="dpbtns"><button class="b on" onclick="openDonate()">💛 Support</button><button class="b" onclick="closeDonatePop()">Later</button></div></div>
 <div class="dview" id="dview"><button class="dvx" onclick="closeDonate()">← Back to map</button><div class="dvcard"><h2>❤️ Support this project</h2><p>Free pandal-hopping guide, kept up every Puja by one person. Goes straight to the developer — not to any puja committee.</p><div id="qrbox"></div><div id="qrsetup" style="display:none"></div><a id="upiapp" class="b wa" target="_blank" rel="noopener" style="display:none">📲 Pay with GPay / PhonePe / Paytm</a><p class="note">UPI works within India only. Any amount helps — thank you! 🙏</p></div></div>
 <div class="sos" id="sos"><button class="dpx" onclick="toggleSos()">✕</button><b>🚨 Emergency numbers</b><a href="tel:112">All-in-one 112</a><a href="tel:100">Police 100</a><a href="tel:102">Ambulance 102</a><a href="tel:101">Fire 101</a><a href="tel:1091">Women helpline 1091</a></div>
-<header><div class="hd"><div class="hl"><h1>🪔 Durga Puja 2026 · Kolkata Pandal &amp; Metro Map</h1><p>Shashthi–Dashami: Oct 17–21, 2026 (Mahalaya Oct 10). Tap a pandal for links. Use the ✋ button on the map to move or zoom it.</p><a id="shw" class="wa" target="_blank" rel="noopener">📲 Share this map on WhatsApp</a><div class="hctrl"><button class="theme-btn" id="tbtn" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button><button class="sos-btn" onclick="toggleSos()" aria-label="Emergency numbers">🚨</button><span id="net" class="netpill">🟢 Online</span></div><div class="by">Crafted with ❤️ by <b>Sudipta Chatterjee</b></div></div><div id="cd"></div></div></header>
+<header><div class="hd"><div class="hl"><h1>🪔 Durga Puja 2026 · Kolkata Pandal &amp; Metro Map</h1><p>Shashthi–Dashami: Oct 17–21, 2026 (Mahalaya Oct 10). Tap a pandal for links. Use the ✋ button on the map to move or zoom it.</p><a id="shw" class="wa" target="_blank" rel="noopener">📲 Share this map on WhatsApp</a><div class="hctrl"><button class="theme-btn" id="tbtn" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button><button class="sos-btn" onclick="toggleSos()" aria-label="Emergency numbers">🚨</button><span id="net" class="netpill">🟢 Online</span><button class="theme-btn" onclick="toggleAccessibilityBar()" aria-label="Accessibility options">Aa</button></div><div class="by">Crafted with ❤️ by <b>Sudipta Chatterjee</b></div></div><div id="cd"></div></div></header>
 <div class="wrap">
 
 <div class="mahalaya-card" id="mahalayaCard">
@@ -377,12 +477,12 @@ header:before{content:"";position:absolute;inset:0;background:radial-gradient(ci
     <div class="mahalaya-icon">🎙️</div>
     <div>
       <div class="mahalaya-title">Mahalaya Live</div>
-      <div class="mahalaya-sub">10 October 2026 · Live audio from 4:00 PM IST</div>
+      <div class="mahalaya-sub">10 October 2026 · Live audio from 4:00 AM IST</div>
     </div>
   </div>
   <div class="mahalaya-live">
     <div class="mahalaya-status"><span class="mahalaya-dot"></span><span id="mahalayaStatus">Scheduled</span></div>
-    <div class="mahalaya-time" id="mahalayaTime">Live audio starts at 4:00 PM</div>
+    <div class="mahalaya-time" id="mahalayaTime">Live audio starts at 4:00 AM</div>
     <div class="mahalaya-count" id="mahalayaCount">Keep this page ready for the live broadcast.</div>
   </div>
   <div class="mahalaya-actions">
@@ -392,6 +492,37 @@ header:before{content:"";position:absolute;inset:0;background:radial-gradient(ci
   <audio id="mahalayaAudio" class="mahalaya-audio" controls preload="none"></audio>
   <div class="mahalaya-note">🔒 After you start playback, you can lock your phone and keep listening when the browser/OS supports background audio. Lock-screen controls are provided where supported.</div>
 </div>
+
+
+<section class="community-shell" id="communityShell">
+  <div class="concierge" id="concierge">
+    <h2>✨ Puja AI Concierge</h2>
+    <p>Ask for a route, food stop or crowd-aware plan in your own words. Example: “3 hours, with parents, near Shyambazar.”</p>
+    <div class="concierge-row"><input id="aiPrompt" placeholder="What should I do tonight?" maxlength="600"><button id="aiAsk">Ask</button></div>
+    <div class="concierge-result" id="aiResult"></div>
+  </div>
+  <div class="accessibility-bar" id="accessibilityBar">
+    <button onclick="toggleLargeText()">A+ Larger text</button><button onclick="toggleContrast()">◐ High contrast</button><button onclick="toggleBengali()">বাংলা / English</button>
+  </div>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <h3>🙋 Live check-ins</h3><div class="live-pulse"><span class="pulse-dot"></span><span id="checkinLabel">People here now</span></div><div class="checkin-count" id="checkinCount">—</div><div class="tiny-muted">Community pulse, not an official crowd count.</div>
+      <div class="feature-actions"><button class="feature-btn good" id="checkinBtn">🙋 I'm here</button><button class="feature-btn alt" id="checkinOutBtn">Leave</button></div><div class="community-status" id="checkinStatus"></div>
+    </div>
+    <div class="feature-card">
+      <h3>💬 Live tips</h3><p>Short visitor updates such as “Gate B is faster” or “parking full”.</p><div class="tip-feed" id="tipFeed"><div class="tiny-muted">Loading community tips…</div></div><div class="feature-actions"><button class="feature-btn" onclick="openTipModal()">＋ Add a tip</button></div>
+    </div>
+    <div class="feature-card">
+      <h3>📸 Community photo wall</h3><p>See visitor photos and add your own from the pandal.</p><div class="photo-grid" id="photoGrid"><div class="tiny-muted">Loading photos…</div></div><div class="feature-actions"><button class="feature-btn" onclick="openPhotoModal()">📷 Add photo</button></div>
+    </div>
+    <div class="feature-card">
+      <h3>♿ Family & accessibility</h3><p id="accessSummary">Ramp, gate, seating and queue notes can be shown for each pandal.</p><div class="access-row" id="accessPills"><span class="access-pill">♿ Ramp: check on arrival</span><span class="access-pill">👴 Seating: community notes</span><span class="access-pill">🚪 Gate: see tips</span></div><div class="last-checked" id="lastChecked">Last checked: community-maintained</div></div>
+    <div class="feature-card">
+      <h3>🚕 Last mile & parking</h3><p>Quick cab/auto search and parking notes for the selected pandal.</p><div class="lm-links" id="lmLinks"><a href="#" onclick="return openRide('ola')">Ola</a><a href="#" onclick="return openRide('uber')">Uber</a><a href="#" onclick="return openRide('rapido')">Rapido</a><a href="#" onclick="return openParking()">🅿️ Parking</a></div><div class="last-checked">Fare is an estimate from the provider; confirm before booking.</div></div>
+    <div class="feature-card">
+      <h3>🔗 Trust & sources</h3><p>Use committee links and visible freshness information instead of hidden assumptions.</p><div class="social-links" id="socialLinks"><span class="tiny-muted">Select a pandal to see available official/social links.</span></div><div class="last-checked" id="sourceChecked">Last checked: not yet verified for this session.</div></div>
+  </div>
+</section>
 
 <div class="mobile-tools" aria-label="Quick mobile actions">
   <button class="mobile-tool" id="nearBtn" type="button">📍<br>Near me</button>
@@ -405,7 +536,7 @@ header:before{content:"";position:absolute;inset:0;background:radial-gradient(ci
 <div class="leg"><span><i class="sw" style="background:var(--blue)"></i>Blue Line</span><span><i class="sw" style="background:var(--green)"></i>Green Line</span><span>■ Metro station</span><span>● Pandal</span><span>┅ Link to nearest metro</span></div></div></div>
 <div><div class="cm"><label>🚇 Start metro trip from <select id="from"></select></label><a id="tr" class="b" target="_blank" rel="noopener">🚗 Live traffic map</a></div><div id="list"></div><div id="bar"><span id="cnt">0 selected</span><button id="opt" class="b" style="display:none" onclick="optOrder()">🔀 Optimize order</button><a id="go" class="off" target="_blank" rel="noopener">Open route in Google Maps</a><a id="wr" class="wa off" target="_blank" rel="noopener">📲 Share on WhatsApp</a><button id="clr">Clear</button></div></div></div>
 <details><summary>Load these pins into your own Google Maps</summary><p>Use the <b>durga-puja-kolkata-2026.kml</b> file from the chat: on mymaps.google.com choose <b>Create a new map → Import</b>, then find it in the Google Maps app under <i>Saved → Maps</i>.</p></details>
-<details><summary>🚇 Metro fare, timings &amp; commute tips</summary><ul><li><b>Fare:</b> distance-based. On the Blue Line it starts at ₹5 and reaches roughly ₹25–30 end to end (Dakshineswar–Kavi Subhash). The Green Line has its own slabs and fares get revised, so confirm at the counter.</li><li><b>Route, timings and fare:</b> pick your start station above the list, then tap <i>🚇 Metro route &amp; fare</i> on any pandal. Google Maps' transit view shows the metro route and timings (fare where Google has it).</li><li><b>Interchange:</b> Esplanade joins the Blue Line (north–south) and the Green Line (Howrah to Salt Lake).</li><li><b>Puja timings:</b> Metro Railway usually announces special services a few days before Shashthi; check mtp.indianrailways.gov.in.</li><li><b>Last mile:</b> many South Kolkata and Salt Lake pandals are 1–3 km from a station, so plan an auto or cab for that stretch, and expect closures and one-way flows near big pandals.</li></ul></details><details><summary>🚦 Crowd guide &amp; live traffic</summary><ul><li>This page cannot pull Google's live busyness. Tap <i>🚦 Map &amp; live crowd</i> to open the place in Google Maps, which shows Popular times and Live status where available, and <i>🚗 Live traffic map</i> for the traffic layer.</li><li>Typical pattern (not live data): Shashthi light to moderate, Saptami busy, Ashtami the heaviest especially at night, Navami busy, Dashami lighter at pandals but heavy near immersion routes.</li><li>Big pandals like Deshapriya Park, Ekdalia and Hindustan Park draw the longest queues, so go early in the afternoon or on an earlier day.</li></ul></details><details><summary>Puja-time tips &amp; help</summary><ul><li>Ashtami and Navami evenings are usually the most crowded; earlier days and weekday afternoons are easier.</li><li>Metro Railway usually announces special Puja-time services a few days before Shashthi, so check its official notice.</li><li>Entry and exit gates of big pandals are often at opposite ends, so fix a meeting point with your group first.</li><li>Wear comfortable shoes and carry a power bank. Emergency in India: call <a href="tel:112">112</a>.</li><li><b>Add to Home Screen:</b> open your browser menu and choose "Add to Home screen" so this map opens like an app.</li></ul></details><p class="note">The North &amp; Central map follows the Indian Oil Puja Guide layout you shared. The South Kolkata and Salt Lake &amp; East maps are rougher sketches built from approximate coordinates, so treat positions and gaps as approximate. Salt Lake picks and their nearest stations are the least certain; confirm in Google Maps. The nearest metro is the closest Blue or Green Line station, so confirm the walk in Google Maps. Themes and new pandals for 2026 are announced close to Shashthi; tithi dates can differ by a day between panjikas.</p><footer class="ft">🪔 Crafted with ❤️ by <b>Sudipta Chatterjee</b><br>Food picks are well-known local favourites near each pandal; opening hours and Puja-time rush vary, so check before you go.</footer></div>
+<details><summary>🚇 Metro fare, timings &amp; commute tips</summary><ul><li><b>Fare:</b> distance-based. On the Blue Line it starts at ₹5 and reaches roughly ₹25–30 end to end (Dakshineswar–Kavi Subhash). The Green Line has its own slabs and fares get revised, so confirm at the counter.</li><li><b>Route, timings and fare:</b> pick your start station above the list, then tap <i>🚇 Metro route &amp; fare</i> on any pandal. Google Maps' transit view shows the metro route and timings (fare where Google has it).</li><li><b>Interchange:</b> Esplanade joins the Blue Line (north–south) and the Green Line (Howrah to Salt Lake).</li><li><b>Puja timings:</b> Metro Railway usually announces special services a few days before Shashthi; check mtp.indianrailways.gov.in.</li><li><b>Last mile:</b> many South Kolkata and Salt Lake pandals are 1–3 km from a station, so plan an auto or cab for that stretch, and expect closures and one-way flows near big pandals.</li></ul></details><details><summary>🚦 Crowd guide &amp; live traffic</summary><ul><li>This page cannot pull Google's live busyness. Tap <i>🚦 Map &amp; live crowd</i> to open the place in Google Maps, which shows Popular times and Live status where available, and <i>🚗 Live traffic map</i> for the traffic layer.</li><li>Typical pattern (not live data): Shashthi light to moderate, Saptami busy, Ashtami the heaviest especially at night, Navami busy, Dashami lighter at pandals but heavy near immersion routes.</li><li>Big pandals like Deshapriya Park, Ekdalia and Hindustan Park draw the longest queues, so go early in the afternoon or on an earlier day.</li></ul></details><details><summary>Puja-time tips &amp; help</summary><ul><li>Ashtami and Navami evenings are usually the most crowded; earlier days and weekday afternoons are easier.</li><li>Metro Railway usually announces special Puja-time services a few days before Shashthi, so check its official notice.</li><li>Entry and exit gates of big pandals are often at opposite ends, so fix a meeting point with your group first.</li><li>Wear comfortable shoes and carry a power bank. Emergency in India: call <a href="tel:112">112</a>.</li><li><b>Add to Home Screen:</b> open your browser menu and choose "Add to Home screen" so this map opens like an app.</li></ul></details><p class="note">The North &amp; Central map follows the Indian Oil Puja Guide layout you shared. The South Kolkata and Salt Lake &amp; East maps are rougher sketches built from approximate coordinates, so treat positions and gaps as approximate. Salt Lake picks and their nearest stations are the least certain; confirm in Google Maps. The nearest metro is the closest Blue or Green Line station, so confirm the walk in Google Maps. Themes and new pandals for 2026 are announced close to Shashthi; tithi dates can differ by a day between panjikas. Pandal list last checked: 29 Sep 2026.</p><footer class="ft">🪔 Crafted with ❤️ by <b>Sudipta Chatterjee</b><br>Food picks are well-known local favourites near each pandal; opening hours and Puja-time rush vary, so check before you go.</footer></div>
 
 <div class="mobile-sheet" id="savedSheet" aria-live="polite">
   <button class="sheet-close" onclick="closeMobileSheets()">✕</button>
@@ -422,7 +553,7 @@ header:before{content:"";position:absolute;inset:0;background:radial-gradient(ci
     <button class="sheet-btn" onclick="openDonate();closeMobileSheets()">❤️ Support</button>
     <button class="sheet-btn" onclick="shareView();closeMobileSheets()">📲 Share view</button>
     <button class="sheet-btn" onclick="useMyLocation()">📍 Find near me</button>
-    <button class="sheet-btn" onclick="scrollToId('bar');closeMobileSheets()">🗺 My route</button>
+    <button class="sheet-btn" onclick="scrollToId('bar');closeMobileSheets()">🗺 My route</button><button class="sheet-btn" onclick="toggleLargeText()">A+ Larger text</button><button class="sheet-btn" onclick="toggleContrast()">◐ High contrast</button><button class="sheet-btn" onclick="toggleBengali()">বাংলা / English</button>
   </div>
   <details style="margin-top:10px"><summary>📱 Mobile tips</summary>
     <ul>
@@ -433,6 +564,10 @@ header:before{content:"";position:absolute;inset:0;background:radial-gradient(ci
     </ul>
   </details>
 </div>
+
+<div class="community-modal" id="tipModal" onclick="if(event.target===this)closeCommunityModal('tipModal')"><div class="community-panel"><h2>💬 Add a live tip</h2><p class="tiny-muted" id="tipPandalName">Current pandal</p><textarea id="tipText" rows="4" maxlength="220" placeholder="Example: Gate B queue is shorter right now."></textarea><div class="community-actions"><button onclick="closeCommunityModal('tipModal')">Cancel</button><button style="background:var(--ink);color:var(--pg)" onclick="submitTip()">Post tip</button></div></div></div>
+<div class="community-modal" id="photoModal" onclick="if(event.target===this)closeCommunityModal('photoModal')"><div class="community-panel"><h2>📸 Add a pandal photo</h2><p class="tiny-muted">Choose a photo. It will be resized in your browser before upload.</p><input id="photoFile" type="file" accept="image/*"><img class="photo-preview" id="photoPreview"><div class="community-actions"><button onclick="closeCommunityModal('photoModal')">Cancel</button><button style="background:var(--ink);color:var(--pg)" onclick="submitPhoto()">Upload photo</button></div></div></div>
+
 <div class="mobile-nav" aria-label="Mobile navigation">
   <button id="mnavExplore" class="active" onclick="mobileExplore()"><span>🔎</span><span>Explore</span></button>
   <button onclick="mobileMap()"><span>🗺️</span><span>Map</span></button>
@@ -450,7 +585,7 @@ const reg=i=>Z[P[i][1]][2],st=(n,r)=>S.find(s=>s[0]==n&&s[4]==r),nm=i=>(P[i][6]?
 const ok=i=>{const p=P[i];return reg(i)==rg&&(zf=="all"||zf==p[1])&&(!star||p[6])&&(!Q||(p[0]+" "+p[2]+" "+F[i][0]+" "+F[i][1]).toLowerCase().includes(Q))};
 const pl=(a,c,w,d)=>'<polyline fill="none" stroke="'+c+'" stroke-width="'+w+'" stroke-linejoin="round" stroke-linecap="round"'+(d?' stroke-dasharray="'+d+'"':'')+' points="'+a.join(" ")+'"/>';
 function links(i){const p=P[i],f=F[i],o=fr?'&origin='+q(fr+" Metro Station"):"",A=(h,t,c)=>'<a class="b'+(c||"")+'" target="_blank" rel="noopener" href="'+h+'">'+t+'</a>';
-return A(G+'search/?api=1&query='+q(p[0]),"🚦 Map & live crowd")+A(G+'dir/?api=1&travelmode=transit&destination='+q(p[0])+o,"🚇 Metro route & fare")+A(G+'dir/?api=1&travelmode=walking&origin='+q(p[2]+" Metro Station")+'&destination='+q(p[0]),"🚶 From metro")+A(G+'dir/?api=1&travelmode=walking&destination='+q(p[0]),"🧭 From my location")+A(G+'search/?api=1&query='+q("public toilet near "+p[0]),"🚻 Nearest toilet")+A(wa("🪔 "+p[0]+" – Durga Puja 2026, Kolkata\n🚇 Nearest metro: "+p[2]+"\n🍽 Eat nearby: "+f[0]+" ("+f[1]+")\n📍 "+G+"search/?api=1&query="+q(p[0])+"\n\nFull pandal, metro & food map: "+SITE),"📲 Share"," wa")}
+return A(G+'search/?api=1&query='+q(p[0]),"🚦 Map & live crowd")+A(G+'dir/?api=1&travelmode=transit&destination='+q(p[0])+o,"🚇 Metro route & fare")+A(G+'dir/?api=1&travelmode=walking&origin='+q(p[2]+" Metro Station")+'&destination='+q(p[0]),"🚶 From metro")+A(G+'dir/?api=1&travelmode=walking&destination='+q(p[0]),"🧭 From my location")+A(G+'search/?api=1&query='+q("public toilet near "+p[0]),"🚻 Nearest toilet")+A(G+'search/?api=1&query='+q("parking near "+p[0]),"🅿️ Parking nearby")+A(wa("🪔 "+p[0]+" – Durga Puja 2026, Kolkata\n🚇 Nearest metro: "+p[2]+"\n🍽 Eat nearby: "+f[0]+" ("+f[1]+")\n📍 "+G+"search/?api=1&query="+q(p[0])+"\n\nFull pandal, metro & food map: "+SITE),"📲 Share"," wa")}
 const food=i=>{const f=F[i];return '<div class="fd">🍽 Eat nearby: <b>'+f[0]+'</b> – '+f[1]+(/stalls/.test(f[0])?'':' <a target="_blank" rel="noopener" href="'+G+'search/?api=1&query='+q(f[0])+'">map</a>')+'</div>'};
 const btns=i=>'<button class="b'+(sel.includes(i)?" on":"")+'" onclick="tog('+i+')">'+(sel.includes(i)?"✓ In route":"＋ Add to route")+'</button><button class="b'+(vs.has(i)?" on":"")+'" onclick="tv('+i+')">'+(vs.has(i)?"✓ Visited":"○ Mark visited")+'</button>';
 function prog(){$("#prog").textContent="✅ Visited "+vs.size+" of "+P.length+" pandals"}
@@ -462,7 +597,7 @@ P.forEach((p,i)=>{if(ok(i)){const s=st(p[2],rg);if(s)h+=pl([[p[3],p[4]],[s[1],s[
 S.filter(s=>s[4]==rg).forEach(s=>{h+='<rect x="'+(s[1]-11)+'" y="'+(s[2]-11)+'" width="22" height="22" rx="5" fill="#fff" stroke="'+(s[3]=="g"?"var(--green)":"var(--blue)")+'" stroke-width="5"/><text x="'+s[1]+'" y="'+(s[2]+5)+'" text-anchor="middle" font-size="14" font-weight="900" fill="#1c1206" style="stroke:none">M</text><text x="'+(s[1]+18)+'" y="'+(s[2]+34)+'" font-size="14" font-weight="800" fill="var(--ink)">'+s[0]+'</text>'});
 P.forEach((p,i)=>{if(reg(i)!=rg)return;const on=ok(i),s=sel.includes(i);h+='<g class="mk" data-i="'+i+'" style="cursor:pointer" opacity="'+(on?1:.15)+'"><circle cx="'+p[3]+'" cy="'+p[4]+'" r="'+(s?23:19)+'" fill="'+Z[p[1]][1]+'" stroke="'+(s?"var(--ink)":"#fff")+'" stroke-width="'+(s?6:3.5)+'"/><text x="'+p[3]+'" y="'+(p[4]+6)+'" text-anchor="middle" font-size="17" font-weight="900" fill="#fff" style="stroke:none">'+(vs.has(i)?"✓":i+1)+'</text><text x="'+(p[3]+26)+'" y="'+(p[4]+5)+'" font-size="15" font-weight="800" fill="var(--ink)">'+nm(i)+'</text></g>'});
 svg.innerHTML=h;document.querySelectorAll(".mk").forEach(g=>g.onclick=()=>{if(!drag)show(+g.dataset.i)})}
-function show(i){cur=i;const p=P[i],o=$("#pop");o.style.setProperty("--c",Z[p[1]][1]);o.style.display="block";o.innerHTML='<span class="x" onclick="cur=-1;$(\'#pop\').style.display=\'none\'">✕</span><div class="nm" style="cursor:default">'+(i+1)+'. '+nm(i)+'</div><div class="mt">🚇 Nearest metro: '+p[2]+(p[5]?' · '+p[5]:'')+'</div>'+food(i)+'<div class="acts">'+links(i)+btns(i)+'</div>'}
+function show(i){cur=i;currentCommunityPandal=i;refreshTrust(i);const p=P[i],o=$("#pop");o.style.setProperty("--c",Z[p[1]][1]);o.style.display="block";o.innerHTML='<span class="x" onclick="cur=-1;$(\'#pop\').style.display=\'none\'">✕</span><div class="nm" style="cursor:default">'+(i+1)+'. '+nm(i)+'</div><div class="mt">🚇 Nearest metro: '+p[2]+(p[5]?' · '+p[5]:'')+'</div>'+food(i)+'<div class="acts">'+links(i)+btns(i)+'</div>'}
 function tog(i){sel=sel.includes(i)?sel.filter(x=>x!=i):[...sel,i];bar();list();draw();if(cur>=0)show(cur)}
 function list(){$("#list").innerHTML=P.map((p,i)=>'<div class="card'+(vs.has(i)?" vd":"")+'" id="c'+i+'" style="--c:'+Z[p[1]][1]+';display:'+(ok(i)?"block":"none")+'"><div class="top"><span class="no">'+(vs.has(i)?"✓":i+1)+'</span><div><div class="nm" data-f="'+i+'">'+nm(i)+'</div><div class="zn">'+Z[p[1]][0]+' · tap name to find on map</div></div></div><div class="mt">🚇 Nearest metro: '+p[2]+(p[5]?' · '+p[5]:'')+'</div>'+food(i)+'<div class="acts">'+links(i)+btns(i)+'</div></div>').join("");
 document.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{const p=P[+b.dataset.f];V.w=380;V.h=547;V.x=p[3]-190;V.y=p[4]-250;clamp();setV();show(+b.dataset.f);svg.scrollIntoView({behavior:"smooth",block:"center"})})}
@@ -500,6 +635,82 @@ $("#from").innerHTML='<option value="">📍 My current location</option>'+ST.map
 $("#from").onchange=e=>{fr=e.target.value;list();if(cur>=0)show(cur)};
 $("#sq").oninput=e=>{Q=e.target.value.trim().toLowerCase();list();draw()};
 $("#mode").onclick=()=>{mv=!mv;setMode()};$("#shw").href=wa("🪔 Durga Puja 2026 – Kolkata pandal, metro & food map (Oct 17–21)\n"+SITE);
+
+
+/* ===== Community, trust, accessibility & AI ===== */
+const COMMUNITY_API="/.netlify/functions/community";
+const AI_API="/.netlify/functions/concierge";
+let communityOnline=false;
+let currentCommunityPandal=0;
+const PANDAL_META={
+  0:{lastChecked:"2026-09-29",access:["♿ Ramp: verify","👴 Seating: ask committee"],parking:"Street parking may be restricted during Puja.",social:[]},
+  1:{lastChecked:"2026-09-29",access:["♿ Step-free route: verify","👶 Family-friendly access"],parking:"Use designated/paid parking where available.",social:[]},
+  14:{lastChecked:"2026-09-29",access:["♿ Ramp: verify","🚪 Separate entry/exit likely"],parking:"Expect road restrictions around the venue.",social:[]},
+  21:{lastChecked:"2026-09-29",access:["♿ Ramp: verify","👴 Seating: ask committee"],parking:"Expect restrictions around Deshapriya Park; use a legal paid/street option away from the gate.",social:[]},
+  24:{lastChecked:"2026-09-29",access:["♿ Ramp: verify","🚪 Gate flow can change"],parking:"Parking is difficult during peak hours; use a drop-off point farther away.",social:[]},
+  25:{lastChecked:"2026-09-29",access:["♿ Step-free route: verify","👴 Seating: ask committee"],parking:"Expect congestion around Gariahat/Ballygunge; avoid blocking residential lanes.",social:[]},
+  26:{lastChecked:"2026-09-29",access:["♿ Accessibility: verify","🚪 Entry route may change"],parking:"Expect restrictions near Hindustan Park; consider drop-off plus walking.",social:[]}
+};
+const defaultMeta={lastChecked:"2026-09-29",access:["♿ Accessibility: verify on arrival","👴 Seating: community notes"],parking:"Parking availability changes during Puja.",social:[]};
+function metaFor(i){return PANDAL_META[i]||defaultMeta}
+function refreshTrust(i){
+  currentCommunityPandal=i;const m=metaFor(i);
+  const ap=$("#accessPills"),sc=$("#socialLinks");
+  if(ap)ap.innerHTML=m.access.map(x=>'<span class="access-pill">'+x+'</span>').join('');
+  if($("#accessSummary"))$("#accessSummary").textContent="Accessibility information is guidance only. Confirm the current entry route with the committee or on-site staff.";
+  if($("#lastChecked"))$("#lastChecked").textContent="Last checked: "+m.lastChecked;
+  if($("#sourceChecked"))$("#sourceChecked").textContent="Content freshness: "+m.lastChecked+" · official links shown when configured.";
+  if(sc)sc.innerHTML=m.social.length?m.social.map(x=>'<a href="'+x.url+'" target="_blank" rel="noopener">'+x.label+'</a>').join(''):'<span class="tiny-muted">Official/social link not configured for this pandal yet.</span>';
+  renderTipsAndPhotos();
+}
+function apiHeaders(){return {'Content-Type':'application/json'}}
+async function communityFetch(body){try{const r=await fetch(COMMUNITY_API,{method:'POST',headers:apiHeaders(),body:JSON.stringify(body)});if(!r.ok)throw new Error('community '+r.status);communityOnline=true;return await r.json()}catch(e){communityOnline=false;return null}}
+async function renderTipsAndPhotos(){
+  const data=await communityFetch({action:'feed',pandalId:currentCommunityPandal});
+  const tf=$("#tipFeed"),pg=$("#photoGrid");
+  if(!data){if(tf)tf.innerHTML='<div class="tiny-muted">Community backend is not connected yet. The UI is ready for Netlify + Supabase.</div>';if(pg)pg.innerHTML='';return}
+  if(tf)tf.innerHTML=(data.tips||[]).length?(data.tips||[]).map(t=>'<div class="tip"><b>💬 Visitor</b> · '+escapeHtml(t.text)+'<small>'+new Date(t.created_at).toLocaleString('en-IN')+'</small></div>').join(''):'<div class="tiny-muted">No tips yet — be the first visitor to help.</div>';
+  if(pg)pg.innerHTML=(data.photos||[]).length?(data.photos||[]).map(x=>'<img src="'+x.url+'" alt="Visitor photo" loading="lazy">').join(''):'<div class="tiny-muted">No photos yet.</div>';
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+async function refreshCheckins(){
+  const data=await communityFetch({action:'pulse',pandalId:currentCommunityPandal});
+  if(data&&typeof data.count==='number'){$("#checkinCount").textContent=data.count;$("#checkinStatus").textContent='Live community pulse';$("#checkinStatus").className='community-status ok'}
+  else {const local=Number(localStorage.getItem('puja26_demo_checkins_'+currentCommunityPandal)||0);$("#checkinCount").textContent=local||'—';$("#checkinStatus").textContent='Demo/local mode — connect the backend for shared counts';$("#checkinStatus").className='community-status warn'}
+}
+async function doCheckin(active){
+  lastCheckinActive=active;localStorage.setItem('puja26_checked_in',active?'1':'0');
+  const data=await communityFetch({action:active?'checkin':'checkout',pandalId:currentCommunityPandal,clientId:getClientId()});
+  if(!data){const k='puja26_demo_checkins_'+currentCommunityPandal;let n=Number(localStorage.getItem(k)||0);n=Math.max(0,n+(active?1:-1));localStorage.setItem(k,n)}
+  refreshCheckins();
+}
+function getClientId(){let x=localStorage.getItem('puja26_client_id');if(!x){x=crypto.randomUUID?.()||('c'+Date.now()+Math.random().toString(36).slice(2));localStorage.setItem('puja26_client_id',x)}return x}
+function openTipModal(){$("#tipPandalName").textContent='For: '+nm(currentCommunityPandal);$("#tipText").value='';$("#tipModal").classList.add('show')}
+function closeCommunityModal(id){$("#"+id).classList.remove('show')}
+async function submitTip(){const text=$("#tipText").value.trim();if(!text)return alert('Please write a short tip.');const data=await communityFetch({action:'tip',pandalId:currentCommunityPandal,text,clientId:getClientId()});if(!data){alert('The community backend is not connected yet. Add the Netlify/Supabase setup, then this will post for everyone.');return}closeCommunityModal('tipModal');renderTipsAndPhotos()}
+function openPhotoModal(){$("#photoFile").value='';$("#photoPreview").style.display='none';$("#photoModal").classList.add('show')}
+$("#photoFile")?.addEventListener('change',e=>{const f=e.target.files?.[0];if(!f)return;const u=URL.createObjectURL(f);$("#photoPreview").src=u;$("#photoPreview").style.display='block'})
+async function submitPhoto(){const f=$("#photoFile").files?.[0];if(!f)return alert('Choose a photo first.');if(f.size>8*1024*1024)return alert('Please choose a photo under 8 MB.');const reader=new FileReader();reader.onload=async()=>{const data=await communityFetch({action:'photo',pandalId:currentCommunityPandal,clientId:getClientId(),dataUrl:reader.result,name:f.name,type:f.type});if(!data){alert('The photo backend is not connected yet. Configure Netlify/Supabase Storage first.');return}closeCommunityModal('photoModal');renderTipsAndPhotos()};reader.readAsDataURL(f)}
+async function askConcierge(){const input=$("#aiPrompt"),out=$("#aiResult"),q=input.value.trim();if(!q)return;out.classList.add('show');out.textContent='Thinking…';try{const r=await fetch(AI_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:q,region:RG[rg]?.[0]||'Kolkata',selected:P.filter((p,i)=>ok(i)).slice(0,25).map((p,i)=>({name:p[0],metro:p[2],region:Z[p[1]][0]}))})});if(!r.ok)throw 0;const d=await r.json();out.textContent=d.answer||'No plan returned.'}catch(e){out.textContent='AI concierge is not connected yet. You can still use Search, Quick plans and Google Maps. To enable it on Netlify, add ANTHROPIC_API_KEY and deploy the included concierge function.'}}
+$("#aiAsk")?.addEventListener('click',askConcierge);$("#aiPrompt")?.addEventListener('keydown',e=>{if(e.key==='Enter')askConcierge()});
+function toggleLargeText(){document.body.classList.toggle('large-text');localStorage.setItem('puja26_large',document.body.classList.contains('large-text')?'1':'0')}
+function toggleAccessibilityBar(){const b=$("#accessibilityBar");if(b)b.classList.toggle("show")}
+let lastCheckinActive=false;
+setInterval(()=>{if(lastCheckinActive)communityFetch({action:'checkin',pandalId:currentCommunityPandal,clientId:getClientId()})},10*60*1000);
+function applyLanguage(){
+  const isBn=document.documentElement.lang==='bn';
+  const set=(id,a,b)=>{const e=$(id);if(e)e.textContent=isBn?a:b};
+  set('#checkinLabel','এখন এখানে দর্শনার্থী','People here now');
+  set('#checkinBtn','🙋 আমি এখানে','🙋 I’m here');set('#checkinOutBtn','বেরিয়ে গেছি','Leave');
+  set('#aiAsk','জিজ্ঞাসা','Ask');
+  const inp=$("#aiPrompt");if(inp)inp.placeholder=isBn?'আজ রাতে কোথায় যাব?':'What should I do tonight?';
+}
+function toggleContrast(){document.body.classList.toggle('high-contrast');localStorage.setItem('puja26_contrast',document.body.classList.contains('high-contrast')?'1':'0')}
+let bn=false;
+function toggleBengali(){bn=!bn;document.documentElement.lang=bn?'bn':'en';document.querySelector('h1').textContent=bn?'🪔 দুর্গাপূজা ২০২৬ · কলকাতা প্যান্ডেল ও মেট্রো ম্যাপ':'🪔 Durga Puja 2026 · Kolkata Pandal & Metro Map';document.querySelector('header p').textContent=bn?'ষষ্ঠী–দশমী: ১৭–২১ অক্টোবর ২০২৬ · মহালয়া ১০ অক্টোবর। প্যান্ডেলে ট্যাপ করে লিঙ্ক দেখুন।':'Shashthi–Dashami: Oct 17–21, 2026 (Mahalaya Oct 10). Tap a pandal for links. Use the ✋ button on the map to move or zoom it.';localStorage.setItem('puja26_bn',bn?'1':'0');applyLanguage()}
+function openRide(kind){const p=P[currentCommunityPandal];const dest=encodeURIComponent(nm(currentCommunityPandal));const urls={ola:'https://book.olacabs.com/',uber:'https://m.uber.com/ul/?action=setPickup&dropoff[formatted_address]='+dest,rapido:'https://m.rapido.bike/'};window.open(urls[kind], '_blank','noopener');return false}
+function openParking(){const p=P[currentCommunityPandal];const q=encodeURIComponent('parking near '+nm(currentCommunityPandal)+', Kolkata');window.open('https://www.google.com/maps/search/?api=1&query='+q,'_blank','noopener');return false}
+$("#checkinBtn")?.addEventListener('click',()=>doCheckin(true));$("#checkinOutBtn")?.addEventListener('click',()=>doCheckin(false));
 
 const UPI_ID="paytm.s2zu7wb@pty",UPI_NAME="Sudipta Chatterjee",UPI_NOTE="Durga Puja Map support";
 function skipSplash(){const sp=$("#splash");if(!sp||sp.classList.contains("hide"))return;sp.classList.add("hide");setTimeout(()=>{sp.style.display="none";maybeShowDonatePop()},500)}
@@ -604,7 +815,8 @@ $("#shareViewBtn")?.addEventListener("click",shareView);
 $("#moreBtn")?.addEventListener("click",openMoreSheet);
 
 setTimeout(skipSplash,2200);
-setMode();setRg("N");bar();prog();cd();setInterval(cd,1000);
+try{if(localStorage.getItem("puja26_large")==="1")document.body.classList.add("large-text");if(localStorage.getItem("puja26_contrast")==="1")document.body.classList.add("high-contrast");if(localStorage.getItem("puja26_bn")==="1")bn=true}catch(e){}
+setMode();setRg("N");bar();prog();cd();setInterval(cd,1000);lastCheckinActive=localStorage.getItem('puja26_checked_in')==='1';refreshTrust(0);refreshCheckins();setInterval(refreshCheckins,30000);
 
 /* ===== Mahalaya live audio ===== */
 const MAHALAYA_DATE="2026-10-10T16:00:00+05:30";
@@ -616,7 +828,7 @@ function mahalayaState(){
   const status=$("#mahalayaStatus"), time=$("#mahalayaTime"), count=$("#mahalayaCount");
   if(now<start){
     const d=start-now,h=Math.floor(d/36e5),m=Math.floor(d%36e5/6e4),sec=Math.floor(d%6e4/1e3);
-    status.textContent="Scheduled";time.textContent="Live audio starts at 4:00 PM IST";count.textContent=`Starts in ${h}h ${String(m).padStart(2,"0")}m ${String(sec).padStart(2,"0")}s`;
+    status.textContent="Scheduled";time.textContent="Live audio starts at 4:00 AM IST";count.textContent=`Starts in ${h}h ${String(m).padStart(2,"0")}m ${String(sec).padStart(2,"0")}s`;
     mahalayaCard.classList.remove("live");mahalayaPlay.textContent="▶ Listen when live";
   }else if(now<end){
     status.textContent="Live now";time.textContent="Mahalaya live audio is on";count.textContent="Tap play once, then lock your phone to keep listening where supported.";
