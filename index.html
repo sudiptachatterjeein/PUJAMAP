@@ -696,7 +696,8 @@ function refreshTrust(i){
   renderTipsAndPhotos();
 }
 function apiHeaders(){return {'Content-Type':'application/json'}}
-async function communityFetch(body){try{const r=await fetch(COMMUNITY_API,{method:'POST',headers:apiHeaders(),body:JSON.stringify(body)});if(!r.ok)throw new Error('community '+r.status);communityOnline=true;return await r.json()}catch(e){communityOnline=false;return null}}
+let lastCommunityError='';
+async function communityFetch(body){try{const r=await fetch(COMMUNITY_API,{method:'POST',headers:apiHeaders(),body:JSON.stringify(body)});if(!r.ok){let m='';try{m=(await r.json()).error||''}catch(e){}throw new Error('HTTP '+r.status+(m?': '+m:''))}communityOnline=true;lastCommunityError='';return await r.json()}catch(e){communityOnline=false;lastCommunityError=String(e&&e.message||e);return null}}
 async function renderTipsAndPhotos(){
   const data=await communityFetch({action:'feed',pandalId:currentCommunityPandal});
   const tf=$("#tipFeed"),pg=$("#photoGrid");
@@ -708,7 +709,7 @@ function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':
 async function refreshCheckins(){
   const data=await communityFetch({action:'pulse',pandalId:currentCommunityPandal});
   if(data&&typeof data.count==='number'){$("#checkinCount").textContent=data.count;$("#checkinStatus").textContent='Live community pulse';$("#checkinStatus").className='community-status ok'}
-  else {const local=Number(localStorage.getItem('puja26_demo_checkins_'+currentCommunityPandal)||0);$("#checkinCount").textContent=local||'—';$("#checkinStatus").textContent='Demo/local mode — connect the backend for shared counts';$("#checkinStatus").className='community-status warn'}
+  else {const local=Number(localStorage.getItem('puja26_demo_checkins_'+currentCommunityPandal)||0);$("#checkinCount").textContent=local||'—';$("#checkinStatus").textContent='Demo/local mode — backend not connected'+(lastCommunityError?' ('+lastCommunityError.slice(0,160)+')':'');$("#checkinStatus").className='community-status warn'}
 }
 async function doCheckin(active){
   lastCheckinActive=active;localStorage.setItem('puja26_checked_in',active?'1':'0');
