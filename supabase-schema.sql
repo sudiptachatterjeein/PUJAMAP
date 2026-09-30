@@ -25,3 +25,40 @@ create table if not exists public.chat_messages (
   created_at timestamptz not null default now()
 );
 create index if not exists chat_messages_time on public.chat_messages(created_at desc);
+
+-- ===== Tables used by community.js that were missing from the original schema =====
+create table if not exists public.checkins (
+  id uuid primary key default gen_random_uuid(),
+  pandal_id integer not null,
+  client_id text not null,
+  created_at timestamptz not null default now()
+);
+create index if not exists checkins_pandal_time on public.checkins(pandal_id, created_at desc);
+
+create table if not exists public.tips (
+  id uuid primary key default gen_random_uuid(),
+  pandal_id integer not null,
+  text text not null check (char_length(text) between 1 and 220),
+  client_id text,
+  approved boolean not null default true,
+  created_at timestamptz not null default now()
+);
+create index if not exists tips_pandal_time on public.tips(pandal_id, created_at desc);
+
+create table if not exists public.photos (
+  id uuid primary key default gen_random_uuid(),
+  pandal_id integer not null,
+  url text not null,
+  client_id text,
+  approved boolean not null default true,
+  created_at timestamptz not null default now()
+);
+create index if not exists photos_pandal_time on public.photos(pandal_id, created_at desc);
+
+-- ===== SECURITY: lock every table so the public anon key cannot read/write them =====
+-- No policies are added on purpose: only Netlify Functions (service-role key) touch these tables.
+alter table public.visitors      enable row level security;
+alter table public.chat_messages enable row level security;
+alter table public.checkins      enable row level security;
+alter table public.tips          enable row level security;
+alter table public.photos        enable row level security;
