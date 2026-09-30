@@ -432,6 +432,15 @@ header:before{content:"";position:absolute;inset:0;background:radial-gradient(ci
   .dpop,.sos{right:78px;left:10px;bottom:calc(12px + env(safe-area-inset-bottom,0px));max-width:none}
   #bar{margin-right:0}
 }
+/* Bottom mobile navigation — kept clear of the Netlify bottom area */
+@media(max-width:899px){
+  body{padding-right:0;padding-bottom:calc(86px + env(safe-area-inset-bottom,0px))}
+  .mobile-nav{left:0;right:0;bottom:0;width:auto;height:auto;grid-template-columns:repeat(5,1fr);grid-template-rows:none;padding:7px 6px calc(7px + env(safe-area-inset-bottom,0px));gap:0;border:0;border-top:1px solid var(--app-line);border-radius:0;background:rgba(255,252,247,.96);z-index:80}
+  .mobile-nav button{width:auto;min-height:52px;border-radius:12px}
+  .mobile-sheet{left:8px;right:8px;bottom:calc(78px + env(safe-area-inset-bottom,0px))}
+  .dpop,.sos{left:10px;right:10px;bottom:calc(78px + env(safe-area-inset-bottom,0px))}
+}
+@media(max-width:899px) and (max-height:700px){.mobile-nav button{min-height:46px}.mobile-nav button span:first-child{font-size:18px}}
 @media(max-width:390px){
   body{padding-right:74px}
   .mobile-nav{right:7px;width:56px;grid-template-rows:repeat(5,49px);padding:4px;gap:3px}
@@ -440,6 +449,16 @@ header:before{content:"";position:absolute;inset:0;background:radial-gradient(ci
   .mobile-sheet,.dpop,.sos{right:70px}
 }
 
+/* ===== Donation, brainstorming, visitor identity ===== */
+.donate-quote{margin:12px auto 2px;max-width:360px;font-size:12px;font-weight:800;color:var(--mut);font-style:italic}
+.brainstorm-card{margin:12px 0;background:linear-gradient(135deg,#172554,#4c1d95);color:#fff;border-radius:18px;padding:15px;box-shadow:0 10px 25px rgba(40,20,100,.18)}
+.brainstorm-title{font-family:"Baloo Da 2",system-ui,sans-serif;font-size:20px;font-weight:900}.brainstorm-card p{margin:3px 0 10px;color:#e9e7ff;font-size:12px}
+.brainstorm-row{display:flex;gap:7px}.brainstorm-row input{flex:1;min-width:0;border:0;border-radius:11px;padding:11px 12px;font-size:13px}.brainstorm-row button{border:0;border-radius:11px;padding:10px 12px;background:#facc15;color:#17130f;font-weight:900}
+.brainstorm-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.brainstorm-chips button{border:1px solid #ffffff33;border-radius:999px;background:#ffffff14;color:#fff;padding:7px 9px;font-size:11px;font-weight:800}
+.brainstorm-result{display:none;margin-top:10px;background:#fff;color:#17130f;border-radius:12px;padding:10px;font-size:13px;white-space:pre-wrap}.brainstorm-result.show{display:block}
+.visitor-code-card{background:var(--pg);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:10px}.visitor-code-card code{display:block;font-weight:900;font-size:14px;margin-top:4px;letter-spacing:.05em}.visitor-code-card small{display:block;color:var(--mut);font-size:10px;margin-top:3px}
+#upiapp{animation:payGlow 1.6s ease-in-out infinite}
+@media(max-width:899px){.brainstorm-card{border-radius:17px;padding:14px}.brainstorm-row{align-items:stretch}.brainstorm-row button{min-width:92px}.donate-quote{font-size:11px}}
 @keyframes dpopGlow{0%,100%{box-shadow:0 6px 20px #0007,0 0 0 0 rgba(202,138,4,.55)}50%{box-shadow:0 6px 20px #0007,0 0 0 10px rgba(202,138,4,0)}}
 @keyframes payGlow{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.6)}50%{box-shadow:0 0 0 9px rgba(37,211,102,0)}}
 #upiapp{animation:payGlow 1.6s ease-in-out infinite}
@@ -467,7 +486,7 @@ header:before{content:"";position:absolute;inset:0;background:radial-gradient(ci
 <div class="sptap">Tap to skip</div>
 </div>
 <div class="dpop" id="dpop"><button class="dpx" onclick="closeDonatePop()">✕</button><div class="dpic">❤️</div><div class="dptxt"><b>Enjoying the map?</b><br>It's free — a small UPI tip keeps it updated every year.</div><div class="dpbtns"><button class="b on" onclick="openDonate()">💛 Support</button><button class="b" onclick="closeDonatePop()">Later</button></div></div>
-<div class="dview" id="dview"><button class="dvx" onclick="closeDonate()">← Back to map</button><div class="dvcard"><h2>❤️ Support this project</h2><p>Free pandal-hopping guide, kept up every Puja by one person. Goes straight to the developer — not to any puja committee.</p><div id="qrbox"></div><div id="qrsetup" style="display:none"></div><a id="upiapp" class="b wa" target="_blank" rel="noopener" style="display:none">📲 Pay with GPay / PhonePe / Paytm</a><p class="note">UPI works within India only. Any amount helps — thank you! 🙏</p></div></div>
+<div class="dview" id="dview"><button class="dvx" onclick="closeDonate()">← Back to map</button><div class="dvcard"><h2>❤️ Support this project</h2><p>Free pandal-hopping guide, kept up every Puja by one person. Goes straight to the developer — not to any puja committee.</p><div id="qrbox"></div><div id="qrsetup" style="display:none"></div><a id="upiapp" class="b wa" target="_blank" rel="noopener" style="display:none">📲 Pay with GPay / PhonePe / Paytm</a><p class="donate-quote">“If this map saved you time, a small contribution helps keep the next Puja map alive.” 🙏</p><p class="note">UPI works within India only. Any amount helps — thank you! 🙏</p></div></div>
 <div class="sos" id="sos"><button class="dpx" onclick="toggleSos()">✕</button><b>🚨 Emergency numbers</b><a href="tel:112">All-in-one 112</a><a href="tel:100">Police 100</a><a href="tel:102">Ambulance 102</a><a href="tel:101">Fire 101</a><a href="tel:1091">Women helpline 1091</a></div>
 <header><div class="hd"><div class="hl"><h1>🪔 Durga Puja 2026 · Kolkata Pandal &amp; Metro Map</h1><p>Shashthi–Dashami: Oct 17–21, 2026 (Mahalaya Oct 10). Tap a pandal for links. Use the ✋ button on the map to move or zoom it.</p><a id="shw" class="wa" target="_blank" rel="noopener">📲 Share this map on WhatsApp</a><div class="hctrl"><button class="theme-btn" id="tbtn" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button><button class="sos-btn" onclick="toggleSos()" aria-label="Emergency numbers">🚨</button><span id="net" class="netpill">🟢 Online</span><button class="theme-btn" onclick="toggleAccessibilityBar()" aria-label="Accessibility options">Aa</button></div><div class="by">Crafted with ❤️ by <b>Sudipta Chatterjee</b></div></div><div id="cd"></div></div></header>
 <div class="wrap">
@@ -500,6 +519,18 @@ header:before{content:"";position:absolute;inset:0;background:radial-gradient(ci
     <p>Ask for a route, food stop or crowd-aware plan in your own words. Example: “3 hours, with parents, near Shyambazar.”</p>
     <div class="concierge-row"><input id="aiPrompt" placeholder="What should I do tonight?" maxlength="600"><button id="aiAsk">Ask</button></div>
     <div class="concierge-result" id="aiResult"></div>
+  </div>
+  <div class="brainstorm-card" id="brainstormCard">
+    <div class="brainstorm-title">🧠 Puja Brainstorm</div>
+    <p>Turn a simple idea into a Puja plan — routes, food stops, family-friendly ideas, photo spots and timing.</p>
+    <div class="brainstorm-row"><input id="brainstormPrompt" maxlength="300" placeholder="Example: “I have 4 hours and want iconic pandals + good food.”"><button id="brainstormAsk">Brainstorm</button></div>
+    <div class="brainstorm-chips">
+      <button onclick="brainstormQuick('Plan a 4-hour family-friendly Puja evening')">👨‍👩‍👧 Family</button>
+      <button onclick="brainstormQuick('Plan a photo-focused Puja route')">📸 Photos</button>
+      <button onclick="brainstormQuick('Plan a Puja route with famous food stops')">🍜 Food</button>
+      <button onclick="brainstormQuick('Plan a low-walking Puja route')">🚶 Less walking</button>
+    </div>
+    <div class="brainstorm-result" id="brainstormResult"></div>
   </div>
   <div class="accessibility-bar" id="accessibilityBar">
     <button onclick="toggleLargeText()">A+ Larger text</button><button onclick="toggleContrast()">◐ High contrast</button><button onclick="toggleBengali()">বাংলা / English</button>
@@ -547,6 +578,7 @@ header:before{content:"";position:absolute;inset:0;background:radial-gradient(ci
 <div class="mobile-sheet" id="moreSheet">
   <button class="sheet-close" onclick="closeMobileSheets()">✕</button>
   <h3>More Puja Tools</h3>
+  <div class="visitor-code-card"><b>🆔 Your visitor code</b><code id="visitorCode">Creating…</code><small>This anonymous code helps the site recognise this browser without using a hardware ID.</small></div>
   <div class="sheet-row">
     <button class="sheet-btn" onclick="toggleTheme();closeMobileSheets()">🌙 Theme</button>
     <button class="sheet-btn" onclick="toggleSos();closeMobileSheets()">🚨 Emergency</button>
@@ -712,7 +744,49 @@ function openRide(kind){const p=P[currentCommunityPandal];const dest=encodeURICo
 function openParking(){const p=P[currentCommunityPandal];const q=encodeURIComponent('parking near '+nm(currentCommunityPandal)+', Kolkata');window.open('https://www.google.com/maps/search/?api=1&query='+q,'_blank','noopener');return false}
 $("#checkinBtn")?.addEventListener('click',()=>doCheckin(true));$("#checkinOutBtn")?.addEventListener('click',()=>doCheckin(false));
 
-const UPI_ID="paytm.s2zu7wb@pty",UPI_NAME="Sudipta Chatterjee",UPI_NOTE="Durga Puja Map support";
+/* ===== Stable first-party visitor code =====
+   This is intentionally an anonymous site ID. It is stable for this browser/profile
+   until the user clears site storage; browsers do not expose a reliable hardware ID.
+*/
+function getVisitorCode(){
+  let id="";
+  try{id=localStorage.getItem("puja26_visitor_code")||""}catch(e){}
+  if(!id){
+    id=(crypto.randomUUID?crypto.randomUUID():("v-"+Date.now()+"-"+Math.random().toString(36).slice(2))).replace(/-/g,"").slice(0,12).toUpperCase();
+    try{localStorage.setItem("puja26_visitor_code",id)}catch(e){}
+  }
+  const el=$("#visitorCode");if(el)el.textContent="PUJA26-"+id;
+  return id;
+}
+getVisitorCode();
+async function visitorHeartbeat(){
+  const b={action:"visitor",visitorCode:getVisitorCode(),page:location.pathname+location.hash,audioPlaying:!!(mahalayaAudio&&!mahalayaAudio.paused)};
+  try{const lat=localStorage.getItem("puja26_lat"),lon=localStorage.getItem("puja26_lon");if(lat&&lon){b.latitude=Number(lat);b.longitude=Number(lon);b.locationPermission=true}}catch(e){}
+  try{await fetch(COMMUNITY_API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b)})}catch(e){}
+}
+setTimeout(visitorHeartbeat,1500);setInterval(visitorHeartbeat,30000);
+
+async function brainstormPlan(prompt){
+  const q=String(prompt||"").trim();const out=$("#brainstormResult");if(!q||!out)return;
+  out.classList.add("show");out.textContent="🧠 Brainstorming your Puja idea…";
+  try{
+    const r=await fetch(AI_API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+      prompt:"Brainstorm a practical Kolkata Durga Puja plan from this idea: "+q+
+      "\nGive 5 concise ideas, then a simple suggested sequence. Do not invent live crowd, weather, fares, opening hours or accessibility facts.",
+      region:RG[rg]?.[0]||"Kolkata",
+      selected:P.filter((p,i)=>ok(i)).slice(0,20).map(p=>({name:p[0],metro:p[2],region:Z[p[1]][0]}))
+    })});
+    if(!r.ok)throw new Error("AI unavailable");
+    const d=await r.json();out.textContent=d.answer||"No brainstorm returned.";
+  }catch(e){
+    out.textContent="Try one of these ideas: start early, group nearby pandals, keep one food stop, leave buffer time for queues, and use Google Maps for live routing.";
+  }
+}
+function brainstormQuick(q){const i=$("#brainstormPrompt");if(i)i.value=q;brainstormPlan(q)}
+$("#brainstormAsk")?.addEventListener("click",()=>brainstormPlan($("#brainstormPrompt")?.value));
+$("#brainstormPrompt")?.addEventListener("keydown",e=>{if(e.key==="Enter")brainstormPlan(e.target.value)});
+
+const UPI_ID="sudiptachatterjee99@ybl",UPI_NAME="Sudipta Chatterjee",UPI_NOTE="Durga Puja Map support";
 function skipSplash(){const sp=$("#splash");if(!sp||sp.classList.contains("hide"))return;sp.classList.add("hide");setTimeout(()=>{sp.style.display="none";maybeShowDonatePop()},500)}
 function maybeShowDonatePop(){let seen=false;try{seen=sessionStorage.getItem("dpSeen")}catch(e){}if(seen)return;setTimeout(()=>{const p=$("#dpop");if(p)p.classList.add("show")},900)}
 function closeDonatePop(){const p=$("#dpop");if(p)p.classList.remove("show");try{sessionStorage.setItem("dpSeen","1")}catch(e){}}
@@ -797,6 +871,7 @@ function useMyLocation(){
   }
   navigator.geolocation.getCurrentPosition(pos=>{
     const lat=pos.coords.latitude.toFixed(6),lon=pos.coords.longitude.toFixed(6);
+    try{localStorage.setItem("puja26_lat",lat);localStorage.setItem("puja26_lon",lon)}catch(e){}
     const u="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent("Durga Puja pandal near "+lat+","+lon);
     window.open(u,"_blank","noopener");
   },()=>{
@@ -819,7 +894,7 @@ try{if(localStorage.getItem("puja26_large")==="1")document.body.classList.add("l
 setMode();setRg("N");bar();prog();cd();setInterval(cd,1000);lastCheckinActive=localStorage.getItem('puja26_checked_in')==='1';refreshTrust(0);refreshCheckins();setInterval(refreshCheckins,30000);
 
 /* ===== Mahalaya live audio ===== */
-const MAHALAYA_DATE="2026-10-10T16:00:00+05:30";
+const MAHALAYA_DATE="2026-10-10T04:00:00+05:30";
 /* Add the real live MP3/AAC/HLS audio URL here before publishing. */
 const MAHALAYA_STREAM_URL="";
 const mahalayaAudio=$("#mahalayaAudio"), mahalayaCard=$("#mahalayaCard"), mahalayaPlay=$("#mahalayaPlay");
@@ -843,12 +918,12 @@ function setupMahalaya(){
   if(MAHALAYA_STREAM_URL)mahalayaAudio.src=MAHALAYA_STREAM_URL;
   mahalayaPlay.onclick=async()=>{
     const now=Date.now(),start=new Date(MAHALAYA_DATE).getTime();
-    if(now<start){alert("Mahalaya live audio starts on 10 October 2026 at 4:00 PM IST.");return;}
+    if(now<start){alert("Mahalaya live audio starts on 10 October 2026 at 4:00 AM IST.");return;}
     if(!MAHALAYA_STREAM_URL){alert("The Mahalaya player is ready, but the live audio stream URL has not been configured yet. Add the real MP3/AAC/HLS URL to MAHALAYA_STREAM_URL in the page script.");return;}
     if(mahalayaAudio.paused){try{await mahalayaAudio.play()}catch(e){alert("Please tap play again to allow audio playback.")}}else mahalayaAudio.pause();
     mahalayaState();
   };
-  $("#mahalayaInfo").onclick=()=>alert("MAHALAYA LIVE\n10 October 2026 · 4:00 PM IST\n\nStart playback before locking your phone. Supported browsers can continue audio in the background and provide lock-screen/media controls.");
+  $("#mahalayaInfo").onclick=()=>alert("MAHALAYA LIVE\n10 October 2026 · 4:00 AM IST\n\nStart playback before locking your phone. Supported browsers can continue audio in the background and provide lock-screen/media controls.");
   mahalayaAudio.addEventListener("play",()=>{
     if("mediaSession" in navigator){navigator.mediaSession.metadata=new MediaMetadata({title:"Mahalaya Live",artist:"Durga Puja 2026 · Kolkata",album:"Kolkata Puja Map"});navigator.mediaSession.playbackState="playing"}
     mahalayaState();
@@ -864,3 +939,4 @@ function setupMahalaya(){
 setupMahalaya();
 
 </script></body></html>
+<style>@media(max-width:390px){body{padding-right:0}.mobile-nav{right:0;width:auto;grid-template-columns:repeat(5,1fr);grid-template-rows:none;padding:5px 4px calc(5px + env(safe-area-inset-bottom,0px));gap:0}.mobile-nav button{width:auto;min-height:48px}.mobile-sheet,.dpop,.sos{right:8px}}</style>
