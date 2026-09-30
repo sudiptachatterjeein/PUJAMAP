@@ -1,0 +1,7 @@
+{
+  "name": "pujamap26",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Puja Map 2026 - static site with Netlify Functions and Supabase",
+  "engines": { "node": ">=18" }
+}
